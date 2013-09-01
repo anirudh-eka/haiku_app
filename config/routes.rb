@@ -1,7 +1,7 @@
 HaikuApp::Application.routes.draw do
   
   resources :poets
-  resources :poems
+  resources :poems, except: :new
 
   root 'poems#index'
   # The priority is based upon order of creation: first created -> highest priority.
