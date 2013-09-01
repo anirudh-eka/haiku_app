@@ -42,7 +42,7 @@ group :test do
   gem 'capybara'
 end
 
-gem 'oauth'
+gem 'omniauth-twitter'
 gem 'twitter'
 gem 'dotenv-rails', :groups => [:development, :test]
 # Use ActiveModel has_secure_password
