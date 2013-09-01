@@ -1,0 +1,4 @@
+<h1>Poems are coming soon!</h1>
+<% @all_poems.each do |poem| %>
+  <%= simple_format(poem.content) %>
+<% end %>
