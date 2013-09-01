@@ -1,4 +1,18 @@
+
+<h1>Write a Haiku or a Short poem!</h1>
+
+<%= form_for @poem do |f| %>
+  <%= f.label :title %>:
+  <%= f.text_field :title %><br />
+  <%= f.label :content %>:
+  <%= f.text_field :content %><br />
+  <%= f.submit %>
+<% end %>
+
+
 <h1>Poems are coming soon!</h1>
 <% @all_poems.each do |poem| %>
+  <%= simple_format(poem.title) %>
   <%= simple_format(poem.content) %>
 <% end %>
+

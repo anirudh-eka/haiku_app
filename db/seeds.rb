@@ -5,4 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Poem.all.each {|poem| poem.destroy!}
 poem = Poem.create(content: "bright sun, soothing breeze\n whispers that each day is an\n opportunity")
