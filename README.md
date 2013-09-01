@@ -1,9 +1,9 @@
 Haicoup
 =======
 
-> A little app for  return
+> A little app for
 >
-> little words to sit in minds  return
+> little words to sit in minds
 >
 > a little longer
 
