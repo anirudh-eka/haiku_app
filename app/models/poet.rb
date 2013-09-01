@@ -6,7 +6,7 @@ class Poet < ActiveRecord::Base
     create! do |poet|
       poet.provider = auth["provider"]
       poet.uid = auth["uid"]
-      poet.username = auth["info"]["name"]
+      poet.name = auth["info"]["name"]
     end
   end
 end
