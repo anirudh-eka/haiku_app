@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def create
-    @user = Poet.find_or_create_from_auth_hash(auth_hash)
-    self.current_user = @user
+    @poet = Poet.find_by_provider_and_uid(auth["provider"], auth["uid"]) || Poet.create_with_omniauth(auth)
+    self.current_user = @poet
     redirect_to '/'
   end
 
