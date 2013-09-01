@@ -42,6 +42,9 @@ group :test do
   gem 'capybara'
 end
 
+gem 'oauth'
+gem 'twitter'
+gem 'dotenv-rails', :groups => [:development, :test]
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
