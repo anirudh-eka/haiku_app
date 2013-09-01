@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   def create
+    puts "*"* 100
+    auth[:credentials]
     poet = Poet.find_by_provider_and_uid(auth["provider"], auth["uid"]) || Poet.create_with_omniauth(auth)
     session[:poet_id] = poet.id
     redirect_to root_path

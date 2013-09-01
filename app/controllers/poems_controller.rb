@@ -6,6 +6,7 @@ class PoemsController < ApplicationController
 
   def create
     Poem.create!(poem_params)
+    Twitter.update(poem_params[:content])
     redirect_to root_url
   end
 
