@@ -8,7 +8,8 @@ class Poet < ActiveRecord::Base
   def self.create_with_omniauth(auth)
     create! do |poet|
       poet.provider = auth["provider"]
-      poet.uid = auth["uid"]
+      poet.oauth_token = auth['credentials']['token']
+      poet.oauth_secret = auth['credentials']['secret']
       poet.name = auth["info"]["name"]
     end
   end
