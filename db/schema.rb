@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130905154714) do
+ActiveRecord::Schema.define(version: 20130905164106) do
 
   create_table "poems", force: true do |t|
     t.string   "title"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20130905154714) do
     t.string   "provider"
     t.string   "oauth_token"
     t.string   "oauth_token_secret"
+    t.string   "uid"
   end
 
   create_table "snaps", force: true do |t|
