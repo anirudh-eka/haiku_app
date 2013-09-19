@@ -3,8 +3,8 @@ class TwitterAPI
 
   def initialize(oauth_token, oauth_secret)
     @client = Twitter::Client.new(
-      oauth_token: auth[:credentials][:token],
-      oauth_token_secret: auth[:credentials][:secret]
+      oauth_token: oauth_token,
+      oauth_token_secret: oauth_secret
     )
   end
 
