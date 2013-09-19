@@ -28,7 +28,7 @@ describe PoemsController do
 
     context 'if user is logged in' do
       before(:each) do
-        basho = Poet.create(name: 'Basho')        
+        basho = FactoryGirl.create(:poet)       
         session[:poet_id] = basho.id
       end
 
