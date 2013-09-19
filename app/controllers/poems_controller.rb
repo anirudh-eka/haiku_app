@@ -9,7 +9,7 @@ class PoemsController < ApplicationController
   def create
     poem = Poem.create(poem_params)
     poet = Poet.find_by(session[:poet_id])
-    TwitterAPI.new(poet.token, poet.secret).tweet(poem.content) if poem.valid?
+    TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content) if poem.valid?
     redirect_to root_path
   end
 
