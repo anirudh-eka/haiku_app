@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PoemsController do
-
+  
   describe 'GET #index' do
     it 'creates a new poem object' do
       get :index
