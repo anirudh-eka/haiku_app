@@ -16,20 +16,19 @@ describe Poet do
   end
 
   context "when created with omniauth" do
-    let(:name) {{name: "Basho"}}
-    # let(:auth) {{provider: "twitter", uid: 123456789, info: name}}
-    let(:auth) {{"provider" => "twitter", "uid" => 123456789, "info" => {"name" => 'Basho'}} }
-    # let(:omniauth_poet) {Poet.create_with_omniauth(auth)}
+    let(:name) {{'name' => "Basho"}}
+    let(:credentials) { {'token' => 1234567, 'secret' => 890123} }
+    let(:auth) {{"provider" => "twitter", "uid" => 123456789, "info" => name, 'credentials' => credentials} }
 
-    # it "should have a uid" do
-    #   auth["uid"] = nil
-    #   expect(Poet.create_with_omniauth(auth)).to raise_error
-    # end
+    it "should have a uid" do
+      auth["uid"] = nil
+      expect{ Poet.create_with_omniauth(auth) }.to raise_error(ActiveRecord::RecordInvalid)
+    end
 
-    # it "should have a provider" do
-    #   auth["provider"] = nil
-    #   expect(Poet.create_with_omniauth(auth)).to raise_error
-    # end
+    it "should have a provider" do
+      auth["provider"] = nil
+      expect{ Poet.create_with_omniauth(auth) }.to raise_error(ActiveRecord::RecordInvalid)
+    end
 
     it "should have a name" do
       auth["info"]["name"] = nil
