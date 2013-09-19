@@ -6,31 +6,37 @@ describe SessionsController do
   let(:request_env) {{'omniauth.auth' => :omniauth_auth}}
   describe 'GET #create' do
     context 'happy path' do
-      context 'when user logs in for the first time' do
-        before(:each) do
-          #Poet.stub(:create_with_omniauth).and_return(new_poet)
-          request.stub(:env).and_return(request_env)
-        end
+      
+    before(:each) do
+      Poet.stub(:create_with_omniauth).and_return(new_poet)
+      request.stub(:env).and_return(request_env)
+    end
 
+      context 'when user logs in for the first time' do
         it 'should call create_with_omniauth on the Poet object' do
-          #Poet.stub(:create_with_omniauth).and_return(new_poet)
           Poet.should_receive(:create_with_omniauth).and_return(new_poet)#.with(auth)
           get :create , :provider => "twitter"
         end
       end
+      context 'when user has logged in before' do
+        it 'should not call create_with_omniauth on the Poet object' do
+          Poet.stub(:find_by_provider_and_uid).and_return(new_poet)
+          Poet.should_not_receive(:create_with_omniauth)
+          get :create, :provider => "twitter"
+        end
+      end
+      
+      it 'should store poet id in session' do
+         get :create, :provider => "twitter"
+         expect(session[:poet_id]).to be(new_poet.id)
+      end
 
-      it 'should store poet id in session'
-      it 'should create new twitter client'
-      it 'should redirect to root path'
+      it 'should redirect to root path' do
+        get :create, :provider => "twitter"
+        expect(response).to redirect_to root_path
+      end
     end
   end
-
-    context 'sad path'
-      context 'when user logs in for the first time'
-        it 'should not create new poet object'
-      it 'should not store poet id in session'
-      it 'should not make new twitter client'
-      it 'should recirect to root path'
 
   describe 'GET #destroy' do
     before(:each) do      
