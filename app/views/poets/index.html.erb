@@ -1,0 +1,9 @@
+<% if @poets.any? %>
+  <% @poets.each do |poet| %>
+    <%= simple_format(poet.name) %>
+  <% end %>
+<% else %>
+  <h2>The Poets are gone</h2>
+  <h2>To revive the tradition</h2>
+  <h2>Please sign in and share</h2>
+<% end %>

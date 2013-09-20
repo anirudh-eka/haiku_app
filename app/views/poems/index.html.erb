@@ -10,9 +10,13 @@
   <% end %>
 <% end %>
 
-<h1>Poems are coming soon!</h1>
-<% @all_poems.each do |poem| %>
-  <%= simple_format(poem.title) %>
-  <%= simple_format(poem.content) %>
+<% if @poems.any? %>
+  <% @poems.each do |poem| %>
+    <%= simple_format(poem.title) %>
+    <%= simple_format(poem.content) %>
+  <% end %>
+<% else %>
+  <h2>The poems are gone</h2>
+  <h2>To revive the tradition</h2>
+  <h2>Please sign in and share</h2>
 <% end %>
-

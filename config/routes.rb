@@ -1,6 +1,6 @@
 HaikuApp::Application.routes.draw do
   
-  resources :poets
+  resources :poets, except: :create
   resources :poems, except: :new
 
   root 'poems#index'
