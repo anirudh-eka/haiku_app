@@ -2,7 +2,7 @@ class PoemsController < ApplicationController
   skip_before_action :require_login, except: [:create]
 
   def index
-    @all_poems = Poem.all
+    @poems = Poem.all
     @poem = Poem.new
   end
 

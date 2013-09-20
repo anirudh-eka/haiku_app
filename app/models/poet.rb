@@ -1,5 +1,5 @@
 class Poet < ActiveRecord::Base
-   has_many :poems
+   has_many :poems, dependent: :destroy
    has_many :snaps
 
    validates_presence_of :name, :provider, :uid

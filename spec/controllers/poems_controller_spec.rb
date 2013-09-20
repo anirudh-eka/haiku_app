@@ -10,11 +10,11 @@ describe PoemsController do
     end
 
     it 'creates an array of all poems' do
-      poems = []
-      5.times{poems << FactoryGirl.create(:poem)}
+      poems_arr = []
+      5.times{poems_arr << FactoryGirl.create(:poem)}
 
       get :index
-      assigns(:all_poems).should eq(poems)
+      assigns(:poems).should eq(poems_arr)
     end
   end
 
