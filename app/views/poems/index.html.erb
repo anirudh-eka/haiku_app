@@ -9,11 +9,11 @@
     <%= f.submit %>
   <% end %>
 <% end %>
-
 <% if @poems.any? %>
   <% @poems.each do |poem| %>
-    <%= simple_format(poem.title) %>
+    <%= simple_format(poem.title) if poem.title%>
     <%= simple_format(poem.content) %>
+    - <%= poem.poet ? poem.poet.name : "Anonymous" %>
   <% end %>
 <% else %>
   <h2>The poems are gone</h2>

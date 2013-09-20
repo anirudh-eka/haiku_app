@@ -2,13 +2,14 @@ class PoemsController < ApplicationController
   skip_before_action :require_login, except: [:create]
 
   def index
-    @poems = Poem.all
+    @poems = Poem.all.reverse
     @poem = Poem.new
   end
 
   def create
-    poem = Poem.create(poem_params)
     poet = Poet.find_by(session[:poet_id])
+    poem = poet.poems.create(poem_params)
+
     TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content) if poem.valid?
     redirect_to root_path
   end
