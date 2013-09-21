@@ -9,9 +9,20 @@ class PoemsController < ApplicationController
   def create
     poet = Poet.find_by(session[:poet_id])
     poem = poet.poems.new(poem_params)
+    puts "*" * 80
+    p poem_params
 
-    TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content) if poem.valid?
-    redirect_to root_path
+    if poem.save
+      TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content)
+      redirect_to root_path flash[:success] = "Your word is a sun, when you let it go, it joins the stars"
+    else
+      @prev_entry = poem_params
+      @error_message = poem.errors.messages[:content].join
+
+      @poem = Poem.new
+      @poems = Poem.all.reverse
+      render :index
+    end
   end
 
   private

@@ -1,4 +1,6 @@
 <% if logged_in? %>
+<%= flash[:success] if flash[:success] %>
+<%= @error_message if @error_message %>
 <h1>Write a Haiku or a Short poem!</h1>
 
   <%= form_for @poem do |f| %>

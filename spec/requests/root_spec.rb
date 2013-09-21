@@ -54,9 +54,12 @@ describe "Root" do
       end
 
       it "should display success message if content is correct length" do
+        fake_TwitterAPI_obj = double({ tweet: true })
+        TwitterAPI.stub(:new).and_return(fake_TwitterAPI_obj)
+
         fill_in 'Content', with: "A monk sips morning tea\n it's quiet\n the chrysanthemum's flowering."
         click_button "Create Poem"
-        page.should have_content "Your Word is a sun, when you let it go, it joins the stars"
+        page.should have_content "Your word is a sun, when you let it go, it joins the stars"
       end
     end
   end
