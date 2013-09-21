@@ -40,4 +40,20 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+  config.include Capybara::DSL
 end
+
+Capybara.default_host = 'http://example.org'
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.add_mock(:twitter, {
+  provider: 'twitter',
+  uid: '12345',
+  credentials: {
+    token: 'thisisatokenthatisvalidiswear',
+    secret: 'thisisasecretthatisvalidiswear'
+  },
+  info: {
+    name: 'Basho'
+  } 
+})

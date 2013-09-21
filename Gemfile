@@ -40,6 +40,7 @@ end
 group :test do
   gem 'faker'
   gem 'capybara'
+  #gem 'database_cleaner', '1.0.1'
   gem "shoulda-matchers"
 end
 
