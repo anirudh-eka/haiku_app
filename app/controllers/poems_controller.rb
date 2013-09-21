@@ -9,8 +9,6 @@ class PoemsController < ApplicationController
   def create
     poet = Poet.find_by(session[:poet_id])
     poem = poet.poems.new(poem_params)
-    puts "*" * 80
-    p poem_params
 
     if poem.save
       TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content)
@@ -18,7 +16,6 @@ class PoemsController < ApplicationController
     else
       @prev_entry = poem_params
       @error_message = poem.errors.messages[:content].join
-
       @poem = Poem.new
       @poems = Poem.all.reverse
       render :index

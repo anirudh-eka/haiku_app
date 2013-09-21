@@ -1,14 +1,29 @@
 <% if logged_in? %>
 <%= flash[:success] if flash[:success] %>
 <%= @error_message if @error_message %>
-<h1>Write a Haiku or a Short poem!</h1>
+<h1>Write a Haiku or a Short poem!</h1>  
+  <% if @prev_entry %>
 
-  <%= form_for @poem do |f| %>
-    <%= f.label :title %>:
-    <%= f.text_field :title %><br />
-    <%= f.label :content %>:
-    <%= f.text_field :content %><br />
-    <%= f.submit %>
+    <%= form_for @poem do |f| %>
+      <%= f.label :title %>:
+      <%= f.text_field :title, value: @prev_entry[:title] unless @prev_entry[:title].empty?%><br />
+      <%= f.text_field :title if @prev_entry[:title].empty?%><br />
+      <%= f.label :content %>
+      <%= f.text_field :content, value: @prev_entry[:content] unless @prev_entry[:content].empty? %><br />
+      <%= f.text_field :content if @prev_entry[:content].empty? %><br />
+      <%= f.submit %>
+    <% end %>
+
+  <% else %>
+
+    <%= form_for @poem do |f| %>
+      <%= f.label :title %>:
+      <%= f.text_field :title %><br />
+      <%= f.label :content %>
+      <%= f.text_field :content %><br />
+      <%= f.submit %>
+    <% end %>
+
   <% end %>
 <% end %>
 <% if @poems.any? %>

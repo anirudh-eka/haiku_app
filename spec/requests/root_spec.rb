@@ -35,22 +35,27 @@ describe "Root" do
       page.should have_button "Create Poem"
     end
 
-    context "when click create poem" do 
+    context "when click create poem" do
+      let(:poem_title) { 'A monk sips morning tea' }
+      let(:too_much_poem_content) { 'h'*141 }
       before(:each) do
-        fill_in 'Title', with: 'A monk sips morning tea'
+        fill_in 'Title', with: poem_title
       end
 
       it "should display error if content field is empty and preserve text of field that have been filled" do
         click_button "Create Poem"
+      
         page.should have_content "What is a poem without words?"
-        find_field('Title').should have_content('A monk sips morning tea')
+        find_field('Title').value.should eq(poem_title)
       end
 
       it "should display error if content field is too long and preserve text of field that have been filled" do
-        fill_in 'Content', with: 'h'*141
+        fill_in 'Content', with: too_much_poem_content
         click_button "Create Poem"
+
         page.should have_content "Words are like light, enough can give you sight, too much can make you blind"
-        find_field('Title').should have_content('A monk sips morning tea')
+        find_field('Title').value.should eq(poem_title)
+        find_field('Content').value.should eq(too_much_poem_content)
       end
 
       it "should display success message if content is correct length" do
