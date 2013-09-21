@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "Root" do
+
   let(:new_poem) { FactoryGirl.create(:poem) }
   before(:each) { visit root_url }
 
@@ -89,5 +90,4 @@ describe "Root" do
       page.should have_content "Please sign in and share"
     end
   end
-
 end

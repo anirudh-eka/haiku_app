@@ -9,12 +9,12 @@ describe PoemsController do
       assigns(:poem).should be_new_record
     end
 
-    it 'creates an array of all poems' do
+    it 'creates an array of all poems in reverse order' do
       poems_arr = []
       5.times{poems_arr << FactoryGirl.create(:poem)}
 
       get :index
-      assigns(:poems).should eq(poems_arr)
+      assigns(:poems).should eq(poems_arr.reverse)
     end
   end
 
@@ -24,7 +24,7 @@ describe PoemsController do
     let(:new_poem) {FactoryGirl.attributes_for(:poem)}
     let(:wrong_params) {post :create, poem: (nil_content)}
     let(:correct_params) {post :create, poem: (new_poem)}
-    let(:twitter_client) {stub(tweet: true)}
+    let(:twitter_client) {double(tweet: true)}
 
     context 'if user is logged in' do
       before(:each) do
@@ -62,20 +62,19 @@ describe PoemsController do
 
         it 'does not send content to Twitter' do
           wrong_params
-
           expect(twitter_client).to_not have_received(:tweet)
         end
 
         it 'redirects to home page' do
           wrong_params
-          expect(response).to redirect_to root_path
+          expect(response).to render_template(:index)
         end
       end
 
       context 'when content is over 140 characters' do
         let(:wrong_params) {post :create, poem: ({content: 'h'*141})}
 
-        let(:twitter_client) {stub(tweet: true)}
+        let(:twitter_client) {double(tweet: true)}
         before { TwitterAPI.stub(:new).and_return(twitter_client) }
 
         it 'does not create a new poem' do
@@ -85,13 +84,12 @@ describe PoemsController do
 
         it 'does not send content to Twitter' do
           wrong_params
-
           expect(twitter_client).to_not have_received(:tweet)
         end
 
         it 'redirects to home page' do
           wrong_params
-          expect(response).to redirect_to root_path
+          expect(response).to render_template(:index)
         end
       end
     end
