@@ -111,4 +111,45 @@ describe PoemsController do
       end
     end
   end
+
+  describe 'PUT #snap' do
+    context 'if user is logged in' do
+      context 'if user has not snapped yet' do 
+        it 'creates new snap object'
+        it 'adds 1 to snap count'
+      end
+
+      context 'if user has snapped' do
+        it 'does not create new snap object'
+        it 'does not add to snap count'
+      end
+
+      it 'redirects to root path'
+    end
+    context 'if user is not logged in' do
+      it 'does not create new snap object'
+      it 'does not add to snap count'
+      it 'redirects to new poet path'
+    end
+  end
+
+  describe 'PUT #unsnap' do
+    context 'if user is logged in' do
+      context 'if user has snapped' do
+        it 'deletes the snap object'
+        it 'subtracts 1 to snap count'
+      end
+      context 'if user has not snapped' do
+        it 'does not delete the snap object'
+        it 'does not subtract 1 to snap count'
+      end
+      
+      it 'redirects to root path'
+    end
+    context 'if user is not logged in' do
+      it 'does not delete the snap object'
+      it 'does not subtract 1 to snap count'
+      it 'redirects to new poet path'
+    end
+  end
 end

@@ -22,6 +22,12 @@ class PoemsController < ApplicationController
     end
   end
 
+  def snap
+  end
+
+  def unsnap
+  end
+
   private
 
   def poem_params
