@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130905164106) do
+ActiveRecord::Schema.define(version: 20130923010559) do
 
   create_table "poems", force: true do |t|
     t.string   "title"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20130905164106) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "poet_id"
+    t.integer  "snap_count", default: 0
   end
 
   create_table "poets", force: true do |t|

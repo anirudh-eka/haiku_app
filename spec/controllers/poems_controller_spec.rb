@@ -123,31 +123,34 @@ describe PoemsController do
       context 'if user has not snapped yet' do 
         it 'creates new snap object' do
           put :snap, id: poem.id
-          expect(poet.snaps.count).to eq(1)
+          expect(poem.snaps.count).to eq(1)
         end
         it 'adds 1 to snap count' do
           put :snap, id: poem.id
-          expect(poem.snap_count).to eq(1)
+          expect(Poem.find(poem.id).snap_count).to eq(1)
         end
       end
 
       context 'if user has snapped' do
         before(:each) do
           poet.snaps.create(poem_id: poem.id)
+          poem.snap_count += 1
+          poem.save
         end
 
         it 'does not create new snap object' do
           put :snap, id: poem.id
-          expect(poet.snaps.count).to_not be > 1
+          expect(poem.snaps.count).to be == 1
         end
 
         it 'does not add to snap count' do
           put :snap, id: poem.id
-          expect(poet.snap_count).to_not be > 1
+          expect(poem.snap_count).to be == 1
         end
       end
 
       it 'redirects to root path' do
+        put :snap, id: poem.id
         expect(response).to redirect_to root_path
       end
     end
@@ -162,6 +165,7 @@ describe PoemsController do
         expect(poem.snap_count).to eq(0)
       end
       it 'redirects to new poet path' do
+        put :snap, id: poem.id
         expect(response).to redirect_to new_poet_path
       end
     end
