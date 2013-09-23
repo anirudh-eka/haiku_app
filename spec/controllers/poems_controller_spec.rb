@@ -21,9 +21,9 @@ describe PoemsController do
   describe 'POST #create' do
     
     let(:nil_content) { {content: nil} }
-    let(:new_poem) {FactoryGirl.attributes_for(:poem)}
+    let(:new_poem_attributes) {FactoryGirl.attributes_for(:poem)}
     let(:wrong_params) {post :create, poem: (nil_content)}
-    let(:correct_params) {post :create, poem: (new_poem)}
+    let(:correct_params) {post :create, poem: (new_poem_attributes)}
     let(:twitter_client) {double(tweet: true)}
 
     context 'if user is logged in' do
@@ -40,11 +40,10 @@ describe PoemsController do
           Poem.all.count.should eq(1)
         end
 
-        it 'sends content to Twitter' do
-          
-          twitter_client.should_receive(:tweet).with(new_poem[:content])
+        it 'sends content to Twitter' do 
+          twitter_client.should_receive(:tweet).with(new_poem_attributes[:content])
           correct_params
-          end
+        end
 
         it 'redirects to home page' do
           correct_params
@@ -113,23 +112,58 @@ describe PoemsController do
   end
 
   describe 'PUT #snap' do
+    let(:poem) { FactoryGirl.create(:poem) }
+    let(:poet) { FactoryGirl.create(:poet) }
+
     context 'if user is logged in' do
+      before(:each) do 
+        session[:poet_id] = poet.id
+      end
+
       context 'if user has not snapped yet' do 
-        it 'creates new snap object'
-        it 'adds 1 to snap count'
+        it 'creates new snap object' do
+          put :snap, id: poem.id
+          expect(poet.snaps.count).to eq(1)
+        end
+        it 'adds 1 to snap count' do
+          put :snap, id: poem.id
+          expect(poem.snap_count).to eq(1)
+        end
       end
 
       context 'if user has snapped' do
-        it 'does not create new snap object'
-        it 'does not add to snap count'
+        before(:each) do
+          poet.snaps.create(poem_id: poem.id)
+        end
+
+        it 'does not create new snap object' do
+          put :snap, id: poem.id
+          expect(poet.snaps.count).to_not be > 1
+        end
+
+        it 'does not add to snap count' do
+          put :snap, id: poem.id
+          expect(poet.snap_count).to_not be > 1
+        end
       end
 
-      it 'redirects to root path'
+      it 'redirects to root path' do
+        expect(response).to redirect_to root_path
+      end
     end
+
     context 'if user is not logged in' do
-      it 'does not create new snap object'
-      it 'does not add to snap count'
-      it 'redirects to new poet path'
+      it 'does not create new snap object' do
+        put :snap, id: poem.id
+        expect(Snap.all).to be_empty
+      end
+      it 'does not add to snap count' do
+        put :snap, id: poem.id
+        expect(poem.snap_count).to eq(0)
+      end
+      it 'redirects to new poet path' do
+        expect(response).to redirect_to new_poet_path
+      end
     end
   end
 
@@ -143,7 +177,7 @@ describe PoemsController do
         it 'does not delete the snap object'
         it 'does not subtract 1 to snap count'
       end
-      
+
       it 'redirects to root path'
     end
     context 'if user is not logged in' do

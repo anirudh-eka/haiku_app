@@ -1,5 +1,5 @@
 class PoemsController < ApplicationController
-  skip_before_action :require_login, except: [:create]
+  skip_before_action :require_login, except: [:create, :snap, :unsnap]
 
   def index
     @poems = Poem.all.reverse
@@ -23,6 +23,7 @@ class PoemsController < ApplicationController
   end
 
   def snap
+    
   end
 
   def unsnap
