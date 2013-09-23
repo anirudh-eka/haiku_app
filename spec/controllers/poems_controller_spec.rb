@@ -114,6 +114,7 @@ describe PoemsController do
   describe 'PUT #snap' do
     let(:poem) { FactoryGirl.create(:poem) }
     let(:poet) { FactoryGirl.create(:poet) }
+    let(:action) { put :snap, id: poem.id }
 
     context 'if user is logged in' do
       before(:each) do 
@@ -172,22 +173,73 @@ describe PoemsController do
   end
 
   describe 'PUT #unsnap' do
+    let(:poem) { FactoryGirl.create(:poem) }
+    let(:poet) { FactoryGirl.create(:poet) }
+
     context 'if user is logged in' do
-      context 'if user has snapped' do
-        it 'deletes the snap object'
-        it 'subtracts 1 to snap count'
-      end
-      context 'if user has not snapped' do
-        it 'does not delete the snap object'
-        it 'does not subtract 1 to snap count'
+      before(:each) do 
+        session[:poet_id] = poet.id
       end
 
-      it 'redirects to root path'
+      context 'if user has snapped' do
+        before(:each) do
+          poet.snaps.create(poem_id: poem.id)
+          poem.snap_count += 1
+          poem.save
+        end
+
+        it 'deletes the snap object' do
+          put :unsnap, id: poem.id
+          expect(poet.snaps.count).to eq(0) 
+        end
+
+        it 'subtracts 1 to snap count' do
+          put :unsnap, id: poem.id
+          expect(Poem.find(poem.id).snap_count).to eq(0)
+        end
+      end
+
+      context 'if user has not snapped' do
+        before(:each) do
+          poem.snaps.create(poet_id: 52)
+          poem.snap_count += 1
+          poem.save
+        end 
+        it 'does not delete the snap object' do
+          put :unsnap, id: poem.id
+          expect(poem.snaps).to_not be_empty
+        end
+        it 'does not subtract 1 to snap count' do
+          put :unsnap, id: poem.id
+          expect(Poem.find(poem.id).snap_count).to eq(1)
+        end
+      end
+
+      it 'redirects to root path' do
+        put :unsnap, id: poem.id
+        expect(response).to redirect_to root_path
+      end
     end
+
     context 'if user is not logged in' do
-      it 'does not delete the snap object'
-      it 'does not subtract 1 to snap count'
-      it 'redirects to new poet path'
+      before(:each) do
+        poet.snaps.create(poem_id: poem.id)
+        poem.snap_count += 1
+        poem.save
+      end
+
+      it 'does not delete the snap object' do
+        put :unsnap, id: poem.id
+        expect(Snap.all.count).to eq(1)
+      end
+      it 'does not subtract 1 to snap count' do
+        put :unsnap, id: poem.id 
+        expect(poem.snap_count).to eq(1)
+      end
+      it 'redirects to new poet path' do
+        put :unsnap, id: poem.id
+        expect(response).to redirect_to new_poet_path
+      end
     end
   end
 end
