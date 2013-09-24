@@ -1,5 +1,5 @@
 class PoemsController < ApplicationController
-  skip_before_action :require_login, except: [:create]
+  skip_before_action :require_login, except: [:create, :snap, :unsnap]
 
   def index
     @poems = Poem.all.reverse
@@ -20,6 +20,26 @@ class PoemsController < ApplicationController
       @poems = Poem.all.reverse
       render :index
     end
+  end
+
+  def snap
+    poem = Poem.find(params[:id])
+    unless poem.snaps.find_by_poet_id(session[:poet_id])
+      poem.snaps.create(poet_id: session[:poet_id])
+      poem.snap_count += 1
+      poem.save 
+    end
+    redirect_to root_path
+  end
+
+  def unsnap
+    poem = Poem.find(params[:id])
+    if snap = poem.snaps.find_by_poet_id(session[:poet_id])
+      snap.destroy
+      poem.snap_count -= 1
+      poem.save 
+    end
+    redirect_to root_path
   end
 
   private
