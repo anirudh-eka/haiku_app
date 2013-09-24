@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130923010559) do
+ActiveRecord::Schema.define(version: 20130924163331) do
 
   create_table "poems", force: true do |t|
     t.string   "title"
@@ -39,5 +39,7 @@ ActiveRecord::Schema.define(version: 20130923010559) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "snaps", ["poem_id", "poet_id"], name: "index_snaps_on_poem_id_and_poet_id", unique: true
 
 end
