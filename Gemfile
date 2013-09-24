@@ -44,6 +44,8 @@ group :test do
   gem "shoulda-matchers"
 end
 
+gem 'compass-rails' # you need this or you get an err
+gem 'zurb-foundation', '~> 4.0.0'
 gem 'omniauth-twitter'
 gem 'twitter'
 gem 'dotenv-rails', :groups => [:development, :test]

@@ -1,24 +1,44 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>HaikuApp</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <nav>
-    <h1>HaiCoup</h1>
-    <ul>
-      <% unless logged_in? %>
-        <li><%= link_to "Sign In with Twitter", "/auth/twitter" %></li>
-      <% else %>
-        <li><%= link_to "Sign Out", signout_path %></li>
-      <% end %>
-    </ul>
-  </nav>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+  <head>
+  	<meta charset="utf-8" />
+  	<!-- Uncomment to make IE8 render like IE7 -->
+  	<!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
 
-<%= yield %>
+  	<!-- Set the viewport width to device width for mobile -->
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-</body>
+  	<title><%= content_for?(:title) ? yield(:title) : "Haicoup" %></title>
+
+  	<%= stylesheet_link_tag    "application" %>
+  	<%= javascript_include_tag "vendor/custom.modernizr" %>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <nav class="top-bar"  >
+      <ul class= "title-area">
+        <li class="name"><h1><%= link_to "HaiCoup", root_path %></h1></li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+      <section class="top-bar-section">
+        <ul class="right">
+          <li class="divider"></li>
+          <% unless logged_in? %>
+            <li><%= link_to "Sign In with Twitter", "/auth/twitter" %></li>
+          <% else %>
+            <li><%= link_to "Sign Out", signout_path %></li>
+          <% end %>
+        </ul>
+      </section>
+    </nav>
+    <div class="row"><div class="large-12 columns"><%= yield %></div></div>
+    <%= javascript_include_tag "application" %>
+  </body>
 </html>

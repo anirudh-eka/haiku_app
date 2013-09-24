@@ -5,7 +5,7 @@
   <% if @prev_entry %>
 
     <%= form_for @poem do |f| %>
-      <%= f.label :title %>:
+      <%= f.label :title %>
       <%= f.text_field :title, value: @prev_entry[:title] unless @prev_entry[:title].empty?%><br />
       <%= f.text_field :title if @prev_entry[:title].empty?%><br />
       <%= f.label :content %>
@@ -17,7 +17,7 @@
   <% else %>
 
     <%= form_for @poem do |f| %>
-      <%= f.label :title %>:
+      <%= f.label :title %>
       <%= f.text_field :title %><br />
       <%= f.label :content %>
       <%= f.text_field :content %><br />
@@ -26,10 +26,11 @@
 
   <% end %>
 <% end %>
+<hr>
 <% if @poems.any? %>
   <% @poems.each do |poem| %>
-    <%= simple_format(poem.title) if poem.title%>
-    <%= simple_format(poem.content) %>
+    <h3><%= simple_format(poem.title) if poem.title%></h3>
+    <h2><%= simple_format(poem.content) %></h2>
     - <%= poem.poet ? poem.poet.name : "Anonymous" %>
     <p> <%= poem.snap_count %> snaps </p>
     <%= button_to "Snap", snap_poem_path(poem.id), method: :put %>
