@@ -31,6 +31,9 @@
     <%= simple_format(poem.title) if poem.title%>
     <%= simple_format(poem.content) %>
     - <%= poem.poet ? poem.poet.name : "Anonymous" %>
+    <p> <%= poem.snap_count %> snaps </p>
+    <%= button_to "Snap", snap_poem_path(poem.id), method: :put %>
+    <%= button_to "Unsnap", unsnap_poem_path(poem.id), method: :put %>
   <% end %>
 <% else %>
   <h2>The poems are gone</h2>
