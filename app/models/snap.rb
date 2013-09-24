@@ -2,5 +2,5 @@ class Snap < ActiveRecord::Base
    belongs_to :poet
    belongs_to :poem
 
-   #validates_uniqueness_of :poet_id, :poem_id
+   validates_uniqueness_of :poem_id, :scope => [:poet_id]
 end
