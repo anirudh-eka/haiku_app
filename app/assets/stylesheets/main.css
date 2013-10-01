@@ -4,7 +4,8 @@ html {
 }
 
 body {
-  background-color: rgba(238, 232, 213, 0.93);
+  background-color: rgba(255, 252, 245, 0.93);
+  /*background-color: rgba(238, 232, 213, 0.93);*/
   top: 0;
   left: 0;
   width: 100%;
@@ -12,5 +13,6 @@ body {
 }
 
 .title-area .name h1 a {
-  color: #dc322f;
+  color: #DE4543;
+  /*font-size: 64px;*/
 }
