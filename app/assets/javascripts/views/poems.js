@@ -12,7 +12,7 @@
     tagName: 'li',
 
     // Cache the template function for a single item.
-    // template: _.template( $('#item-template').html() ),
+    //template: _.template( $('#item-template').html() ),
     template: _.template('<h3><%= content %></h3>'),
 
     // The PoemView listens for changes to its model, re-rendering. Since there's
