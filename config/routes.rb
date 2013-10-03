@@ -8,7 +8,8 @@ HaikuApp::Application.routes.draw do
     end
   end
 
-  root 'poems#index'
+  # root 'poems#index'
+  root 'home#index'
   get "/auth/:provider/callback" => "sessions#create"
   get "/signout" => "sessions#destroy", :as => :signout
 

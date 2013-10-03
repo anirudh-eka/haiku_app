@@ -4,6 +4,7 @@ class PoemsController < ApplicationController
   def index
     @poems = Poem.all.reverse
     @poem = Poem.new
+    render :json => @poems
   end
 
   def create
