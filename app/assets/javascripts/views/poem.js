@@ -1,38 +1,34 @@
-  // js/views/app.js
+ // js/views/Poems.js
 
   var app = app || {};
 
-  // The Application
-  // ---------------
+  // Poem Item View
+  // --------------
 
-  // Our overall **AppView** is the top-level piece of UI.
-  app.PoemsView = Backbone.View.extend({
-    // Instead of generating a new element, bind to the existing skeleton of
-    // the App already present in the HTML.
-    el: '#haikuapp',
+  // The DOM element for a Poem item...
+  app.PoemView = Backbone.View.extend({
 
-    // At initialization we bind to the relevant events on the `Todos`
-    // collection, when items are added or changed. Kick things off by
-    // loading any preexisting todos that might be saved in *localStorage*.
+    //... is a list tag.
+    tagName: 'li',
+
+    // Cache the template function for a single item.
+    // template: _.template( $('#item-template').html() ),
+    template: function(arg) { return JST['poem'](arg) },
+    //template: _.template('<h3><%= content %></h3>'),
+
+    // The PoemView listens for changes to its model, re-rendering. Since there's
+    // a one-to-one correspondence between a **Poem** and a **PoemView** in this
+    // app, we set a direct reference on the model for convenience.
     initialize: function() {
-      console.log(this)
-      this.listenTo(this.collection, 'add', this.addOne);
-      this.listenTo(this.collection, 'reset', this.addAll);
-      this.collection.fetch();
+      this.listenTo(this.model, 'change', this.render);
+      this.listenTo(this.model, 'destroy', this.remove);        // NEW
+      this.listenTo(this.model, 'visible', this.toggleVisible); // NEW
     },
 
-    // Add a single todo item to the list by creating a view for it, and
-    // appending its element to the `<ul>`.
-    addOne: function( poem ) {
-      console.log('add one')
-      var view = new app.PoemView({ model: poem });
-      $('#poem-list').append( view.render().el );
+    // Re-render the titles of the Poem item.
+    render: function() {
+      this.$el.html( this.template( this.model.toJSON() ) );
+      return this;
     },
 
-    // Add all items in the **Poems** collection at once.
-    addAll: function() {
-      console.log('add all')
-      this.$('#poem-list').html('');
-      this.collection.each(this.addOne, this);
-    },
   });
