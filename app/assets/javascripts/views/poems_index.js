@@ -6,10 +6,6 @@ HaikuApp.Views.PoemIndex = Backbone.View.extend({
     this.collection.fetch({reset: true});
   },
 
-  submitNewPoem: function() {
-    debugger
-    console.log('you submitted!')
-  },
 
   addAll: function(modelArray) {
     var self = this
