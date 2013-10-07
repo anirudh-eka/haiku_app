@@ -4,7 +4,9 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
   },
 
   index: function() {
+    // HaikuApp.Collections.Poems.fetch();
+
     var view = new HaikuApp.Views.PoemIndex({ collection: HaikuApp.Collections.Poems })
-    $('#poem-list').html(view.render().$el);
+    $('#poem-list').html(view.$el);
   } 
 }); 

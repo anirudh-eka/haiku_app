@@ -1,5 +1,5 @@
 
 <% poems.each(function(model){ %>
-  <h2><%= model.title %></h2>
-  <h3><%= model.content %></h3>
+  <h2><%= model.get('title') %></h2>
+  <h3><%= model.get('content') %></h3>
 <% }); %>

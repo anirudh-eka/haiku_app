@@ -3,5 +3,6 @@ class WelcomeController < ApplicationController
   respond_to :html, :json
 
   def index
+    @poems = Poem.all
   end
 end
