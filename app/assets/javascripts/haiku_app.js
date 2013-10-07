@@ -5,6 +5,8 @@ window.HaikuApp = {
   Routers: {},
   initialize: function() {
     alert('Hello from Backbone!');
+    new HaikuApp.Routers.Poems();
+    Backbone.history.start();
   }
 };
 

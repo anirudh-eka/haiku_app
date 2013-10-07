@@ -1,0 +1,1 @@
+var Poem = Backbone.Model.extend({});

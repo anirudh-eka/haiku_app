@@ -1,8 +1,9 @@
 class PoemsController < ApplicationController
   skip_before_action :require_login, except: [:create, :snap, :unsnap]
+  respond_to :html, :json
 
   def index
-    @poems = Poem.all.reverse
+    respond_with(@poems = Poem.all.reverse)
     @poem = Poem.new
   end
 
