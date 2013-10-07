@@ -1,21 +1,26 @@
 HaikuApp.Views.PoemIndex = Backbone.View.extend({
+
   initialize: function() {
     this.listenTo(this.collection, 'reset', this.addAll)
     this.listenTo(this.collection, 'add', this.addOne)
     this.collection.fetch({reset: true});
   },
 
-  render: function() {
-    console.log('rendering')
-    this.$el.html(JST['poems/index']({ poems: this.collection }))
+  submitNewPoem: function() {
+    debugger
+    console.log('you submitted!')
+  },
+
+  addAll: function(modelArray) {
+    var self = this
+    modelArray.each(function(model){
+      self.addOne(model);
+    });
+  },
+
+  addOne: function(model) {
+    var poemView = new HaikuApp.Views.Poem({model: model})
+    this.$el.append(poemView.render().$el);
     return this
-  },
-
-  addAll: function() {
-    this.render()
-  },
-
-  addOne: function() {
-    this.render();
   }
 });

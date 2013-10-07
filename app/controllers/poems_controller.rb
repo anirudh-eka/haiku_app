@@ -4,22 +4,23 @@ class PoemsController < ApplicationController
 
   def index
     respond_with(@poems = Poem.all.reverse)
-    @poem = Poem.new
   end
 
   def create
     poet = Poet.find_by(session[:poet_id])
-    poem = poet.poems.new(poem_params)
+    @poem = poet.poems.new(poem_params)
 
-    if poem.save
-      TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content)
-      redirect_to root_path flash[:success] = "Your word is a sun, when you let it go, it joins the stars"
+    if @poem.save
+      # TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content)
+      # redirect_to root_path flash[:success] = "Your word is a sun, when you let it go, it joins the stars"
+      respond_with(@poem)
     else
       @prev_entry = poem_params
       @error_message = poem.errors.messages[:content].join
       @poem = Poem.new
       @poems = Poem.all.reverse
-      render :index
+      # render :index
+      respond_with(@poem)
     end
   end
 

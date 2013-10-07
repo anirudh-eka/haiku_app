@@ -1,6 +1,6 @@
 HaikuApp.Routers.Poems = Backbone.Router.extend({
   routes: {
-    "" :"index" 
+    "" :"index"
   },
 
   index: function() {
@@ -8,5 +8,5 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
 
     var view = new HaikuApp.Views.PoemIndex({ collection: HaikuApp.Collections.Poems })
     $('#poem-list').html(view.$el);
-  } 
+  }
 }); 
