@@ -1,1 +1,5 @@
-var Poem = Backbone.Model.extend({});
+HaikuApp.Models.Poem = Backbone.Model.extend({
+  defaults: {
+    title: ''
+  }
+});
