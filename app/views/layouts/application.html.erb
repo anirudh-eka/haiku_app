@@ -18,7 +18,6 @@
   	<%= javascript_include_tag "vendor/custom.modernizr" %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
   </head>
   <body>
@@ -39,6 +38,6 @@
       </section>
     </nav>
     <div class="row"><div class="large-12 columns"><%= yield %></div></div>
-    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   </body>
 </html>
