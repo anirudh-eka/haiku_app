@@ -49,6 +49,7 @@ gem 'zurb-foundation', '~> 4.0.0'
 gem 'omniauth-twitter'
 gem 'twitter'
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'backbone-on-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
