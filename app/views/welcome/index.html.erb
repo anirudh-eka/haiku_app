@@ -1,8 +1,4 @@
-<%= form_for @poem do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title %><br />
-  <%= f.label :content %>
-  <%= f.text_field :content %><br />
-  <%= f.submit %>
+<% if logged_in? %>
+  <div id ='new-poem-container'></div>
 <% end %>
 <div id ='poem-list'></div>

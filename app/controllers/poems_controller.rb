@@ -7,6 +7,8 @@ class PoemsController < ApplicationController
   end
 
   def create
+    puts '*'* 80
+    p params
     poet = Poet.find_by(session[:poet_id])
     @poem = poet.poems.new(poem_params)
 
@@ -15,10 +17,8 @@ class PoemsController < ApplicationController
       # redirect_to root_path flash[:success] = "Your word is a sun, when you let it go, it joins the stars"
       respond_with(@poem)
     else
-      @prev_entry = poem_params
-      @error_message = poem.errors.messages[:content].join
-      @poem = Poem.new
-      @poems = Poem.all.reverse
+      puts 'bad '* 80
+      #@error_message = @poem.errors.messages[:content].join
       # render :index
       respond_with(@poem)
     end
