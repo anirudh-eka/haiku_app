@@ -2,8 +2,7 @@ var syncStatus = Backbone.View.extend({
   el: '#status-messager',
 
   events: {
-    "click .error-message" : "messageSlideUp",
-    "click .success-message" : "messageSlideUp"
+    "click .message" : "clearMsg",
   },
 
   initialize: function() {
@@ -12,17 +11,15 @@ var syncStatus = Backbone.View.extend({
   },
 
   renderMsg: function(msg, status) {
-    this.$el.html("<h3 class='"+status+"-message'>"+msg+"</h3>")    
-    this.messageSlideDown();
-  },
-
-  messageSlideDown: function() {
+    var message = $("<h3 class='message'>"+msg+"</h3>").addClass(status)
+    this.$el.empty();
+    this.$el.append(message)//html("<h3 class='message'>"+msg+"</h3>")    
     this.$el.slideDown();
   },
 
-  messageSlideUp: function() {
+  clearMsg: function() {
     this.$el.slideUp();
-  },
+  }
 });
 
 HaikuApp.Views.StatusMessager = new syncStatus()
