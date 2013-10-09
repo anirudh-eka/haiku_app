@@ -7,6 +7,7 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
 
   initialize: function() {
     this.render();
+    this.listenTo(this.collection, 'error', this.anError)
   },
 
   render: function() {
@@ -18,12 +19,19 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     e.preventDefault();
     var title = $('#title').val()
     var content = $('#content').val()
-    console.log('title is '+title+', and content is '+content)
-    this.collection.create({title: title, content: content}, {wait: true},{
-      error: function(r) {
-        console.log('error!')
-        // console.log(r)
+    var self = this
+    this.collection.create({title: title, content: content}, {wait: true, 
+      error: function() {
+      },
+      success: function() {
+        console.log('success')
+        console.log(self)
+        self.render()
       }
     });
+  },
+
+  anError: function() {
+    console.log('error2!');
   }
 });
