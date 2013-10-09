@@ -1,5 +1,5 @@
 HaikuApp.Views.PoemNew = Backbone.View.extend({
-  id: 'new-poem-container',
+  el: '#new-poem-container',
 
   events: {
     "submit #new-poem" : "submit"
@@ -7,7 +7,6 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
 
   initialize: function() {
     this.render();
-    this.listenTo(this.collection, 'error', this.anError)
   },
 
   render: function() {
@@ -22,16 +21,12 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     var self = this
     this.collection.create({title: title, content: content}, {wait: true, 
       error: function() {
+        HaikuApp.Views.StatusMessager.trigger('dispMessage', 'What is a poem without words?', 'error')
       },
       success: function() {
-        console.log('success')
-        console.log(self)
+        HaikuApp.Views.StatusMessager.trigger('dispMessage', 'Your word is a sun, when you let it go, it joins the stars', 'success')
         self.render()
       }
     });
   },
-
-  anError: function() {
-    console.log('error2!');
-  }
 });

@@ -37,7 +37,12 @@
         </ul>
       </section>
     </nav>
-    <div class="row"><div class="large-12 columns"><%= yield %></div></div>
+    <div class="row">
+      <div class="large-12 columns">
+        <div id ='status-messager'></div>
+        <%= yield %>
+      </div>
+    </div>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   </body>
 </html>
