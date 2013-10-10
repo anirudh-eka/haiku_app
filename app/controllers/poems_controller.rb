@@ -9,9 +9,11 @@ class PoemsController < ApplicationController
   def create
     poet = Poet.find_by(session[:poet_id])
     @poem = poet.poems.new(poem_params)
+    puts '*'* 80
+
     if @poem.save
       # TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content)
-      respond_with(@poem)
+      p respond_with(@poem)
     else
       respond_with(@poem)
     end
