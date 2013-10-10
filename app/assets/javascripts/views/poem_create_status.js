@@ -11,7 +11,7 @@ var syncStatus = Backbone.View.extend({
   },
 
   renderMsg: function(msg, status) {
-    var message = $("<h3 class='message'>"+msg+"</h3>").addClass(status)
+    var message = $("<h4 class='message'>"+msg+"</h4>").addClass(status)
     this.$el.empty();
     this.$el.append(message)
     this.$el.slideDown();

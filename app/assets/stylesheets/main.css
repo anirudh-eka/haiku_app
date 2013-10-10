@@ -1,16 +1,48 @@
 html {
-  background: url('birds_in_tree.jpg') no-repeat center center fixed;
+  background: url('carlton_birds.png') no-repeat center center fixed;
+  /*background: url('birds_in_tree.jpg') no-repeat center center fixed;*/
   background-size: cover;
 }
 
 body {
-  background-color: rgba(238, 232, 213, 0.93);
+  background-color: rgba(238, 232, 213, 0);
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
 
+#status-messager .message {
+  cursor: pointer
+}
+
+.success {
+  color: #859900;
+}
+
+.error {
+  color: #dc322f;
+}
+
 .title-area .name h1 a {
   color: #dc322f;
+}
+
+#left-bar{
+  position: fixed;
+}
+.poem {
+  /*background-color: rgba(238, 232, 213, 0.8);*/
+  /*background-color: rgba(0, 43, 54, 0.9);*/
+  min-height: 100px;
+  text-align: center;
+}
+
+.poem .title {
+  color: #586e75;
+}
+
+.poem .author {
+  text-align: right;
+  color:#2aa198;
 }
