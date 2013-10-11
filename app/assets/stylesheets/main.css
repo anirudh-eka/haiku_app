@@ -31,11 +31,18 @@ body {
 #left-bar{
   /*position: fixed;*/
 }
+
+#poem-list {
+  background-color: rgba(240, 240, 240, 0.4);
+  padding: 0px;
+}
+
 .poem {
   /*background-color: rgba(238, 232, 213, 0.8);*/
   /*background-color: rgba(0, 43, 54, 0.9);*/
-  min-height: 100px;
+  min-height: 130px;
   text-align: center;
+  border-top: 1px solid #C9B7AD;
 }
 
 .poem .title {
