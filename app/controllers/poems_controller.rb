@@ -12,8 +12,7 @@ class PoemsController < ApplicationController
     puts '*'* 80
 
     if @poem.save
-      # TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content)
-      respond_with(@poem)
+      respond_with(@poem, include: { poet: { only: [:id, :name] } })
     else
       respond_with(@poem)
     end
