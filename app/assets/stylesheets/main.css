@@ -12,7 +12,7 @@ body {
   height: 100%;
 }
 
-#status-messager .message {
+.message {
   cursor: pointer
 }
 
