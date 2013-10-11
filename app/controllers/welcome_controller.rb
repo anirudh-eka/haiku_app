@@ -3,6 +3,9 @@ class WelcomeController < ApplicationController
   respond_to :html, :json
 
   def index
-    @poem = Poem.new
+    puts '*' * 80
+    @something ='cat'
+    @poems = Poem.all
+    @poets = Poet.all
   end
 end

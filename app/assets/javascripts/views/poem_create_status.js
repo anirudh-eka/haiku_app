@@ -1,5 +1,5 @@
-var syncStatus = Backbone.View.extend({
-  el: '#status-messager',
+HaikuApp.Views.StatusMessager = Backbone.View.extend({
+  // el: '#status-messager',
 
   events: {
     "click .message" : "clearMsg",
@@ -11,15 +11,15 @@ var syncStatus = Backbone.View.extend({
   },
 
   renderMsg: function(msg, status) {
+    this.$el.hide()
     var message = $("<h4 class='message'>"+msg+"</h4>").addClass(status)
     this.$el.empty();
     this.$el.append(message)
     this.$el.slideDown();
+    // debugger
   },
 
   clearMsg: function() {
     this.$el.slideUp();
   }
 });
-
-HaikuApp.Views.StatusMessager = new syncStatus()

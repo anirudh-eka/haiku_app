@@ -5,3 +5,21 @@
 <% end %>
 </div>
 <div id ='poem-list' class="large-7 columns"></div>
+
+<script type="text/javascript">
+
+     $(function () {
+       var div = $('<div></div>');
+       div.html($('#bootstrap').text());
+       var data = JSON.parse(div.text());
+
+       HaikuApp.initialize(data);
+     });
+</script>
+
+<script type="text/json" id="bootstrap">
+  {
+    "poems": <%= @poems.to_json%>,
+    "poets": <%= @poets.to_json %>
+  }
+</script>

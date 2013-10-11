@@ -3,7 +3,8 @@ HaikuApp.Views.PoemIndex = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.collection, 'reset', this.addAll)
     this.listenTo(this.collection, 'add', this.addOne)
-    this.collection.fetch({reset: true});
+    this.addAll(this.collection);
+    // this.collection.fetch({reset: true});
   },
 
 

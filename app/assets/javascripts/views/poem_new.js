@@ -21,7 +21,10 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     var self = this
     this.collection.create({title: title, content: content}, {wait: true, 
       error: function() {
-        HaikuApp.Views.StatusMessager.trigger('dispMessage', 'What is a poem without words?', 'error')
+        var messager = new HaikuApp.Views.StatusMessager()
+        messager.el = '#poem-create-messager'
+        messager.renderMsg('What is a poem without words?', 'error');
+        // messager.trigger('dispMessage', 'What is a poem without words?', 'error')
       },
       success: function() {
         HaikuApp.Views.StatusMessager.trigger('dispMessage', 'Thank you for sharing', 'success')
