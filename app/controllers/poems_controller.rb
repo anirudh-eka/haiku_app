@@ -13,7 +13,7 @@ class PoemsController < ApplicationController
 
     if @poem.save
       # TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content)
-      p respond_with(@poem)
+      respond_with(@poem)
     else
       respond_with(@poem)
     end

@@ -25,8 +25,7 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
         self.messager.renderMsg('What is a poem without words?', 'error');
       },
       success: function() {
-        HaikuApp.Views.StatusMessager.trigger('dispMessage', 'Thank you for sharing', 'success')
-        self.render()
+        self.messager.renderMsg('Thank you for sharing', 'success');
       }
     });
   },

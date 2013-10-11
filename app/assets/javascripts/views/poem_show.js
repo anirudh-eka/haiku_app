@@ -3,7 +3,8 @@ HaikuApp.Views.Poem = Backbone.View.extend({
   className: 'poem',
 
   render: function() {
-    this.$el.html(JST['poems/show']({ poem: this.model.toJSON() }))
+    console.log(this.model.author())
+    this.$el.html(JST['poems/show']({ poem: this.model.toJSON(), author: this.model.author() }))
     return this
   }
 });

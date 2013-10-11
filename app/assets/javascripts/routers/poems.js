@@ -8,7 +8,6 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
   },
 
   index: function() {
-    console.log('index router') 
     new HaikuApp.Views.PoemNew( { collection: this.collection } )
     // var status = new HaikuApp.Views.PoemCreationStatus( { collection: HaikuApp.Collections.Poems } )
     var view = new HaikuApp.Views.PoemIndex({ collection: this.collection})
