@@ -3,8 +3,7 @@ class WelcomeController < ApplicationController
   respond_to :html, :json
 
   def index
-    puts '*' * 80
-    @something ='cat'
+    @current_user = Poet.find(session[:poet_id]) if session[:poet_id]
     @poems = Poem.all
     @poets = Poet.all
   end

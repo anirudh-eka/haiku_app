@@ -20,6 +20,7 @@
   {
     "poems": <%= @poems.to_json(include: 
                                 { poet: { only: [:id, :name] } })%>,
-    "poets": <%= @poets.to_json %>
+    "poets": <%= @poets.to_json(only: [:id, :name]) %>,
+    "currentUser": <%= @current_user.to_json(only: [:id, :name],:include => :snaps) %> 
   }
 </script>

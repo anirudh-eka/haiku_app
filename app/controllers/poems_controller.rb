@@ -9,7 +9,6 @@ class PoemsController < ApplicationController
   def create
     poet = Poet.find_by(session[:poet_id])
     @poem = poet.poems.new(poem_params)
-    puts '*'* 80
 
     if @poem.save
       respond_with(@poem, include: { poet: { only: [:id, :name] } })

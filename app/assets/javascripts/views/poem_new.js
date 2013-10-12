@@ -26,8 +26,8 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
       },
       success: function() {
         self.messager.renderMsg('Thank you for sharing', 'success');
-      $('#title').val("")
-      $('#content').val("")
+        $('#title').val("")
+        $('#content').val("")
       }
     });
   },
