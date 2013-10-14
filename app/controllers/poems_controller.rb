@@ -1,20 +1,18 @@
 class PoemsController < ApplicationController
   skip_before_action :require_login, except: [:create, :snap, :unsnap]
-  respond_to :html, :json
+  respond_to :json
 
   def index
-    respond_with(@poems = Poem.all)
+    @poems = Poem.all
+    respond_with(@poems, include: { poet: { only: [:id, :name] } })
   end
 
   def create
-    poet = Poet.find_by(session[:poet_id])
+    poet = Poet.find(session[:poet_id])
     @poem = poet.poems.new(poem_params)
 
-    if @poem.save
-      respond_with(@poem, include: { poet: { only: [:id, :name] } })
-    else
-      respond_with(@poem)
-    end
+    TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(@poem.content) if @poem.save
+    respond_with(@poem, include: { poet: { only: [:id, :name] } })
   end
 
   def snap

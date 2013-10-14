@@ -1,14 +1,16 @@
 HaikuApp::Application.routes.draw do
   
   resources :poets, except: :create
+
   resources :poems, except: :new do
     member do
       put 'snap'
       put 'unsnap'
     end
   end
+ 
 
-  root 'welcome#index'
+  root 'welcome#index' 
   get "/auth/:provider/callback" => "sessions#create"
   get "/signout" => "sessions#destroy", :as => :signout
 

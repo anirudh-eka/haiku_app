@@ -4,7 +4,7 @@ HaikuApp.Collections.Snaps = Backbone.Collection.extend({
   },
 
   url: function() {
-    return this.currentUser.id + '/snaps';
+    return 'poet/' + HaikuApp.currentUser.id + '/snaps';
   },
 
   model: HaikuApp.Models.Snap

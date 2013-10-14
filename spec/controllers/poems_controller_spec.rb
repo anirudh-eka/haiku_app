@@ -2,19 +2,12 @@ require 'spec_helper'
 
 describe PoemsController do
 
-  
   describe 'GET #index' do
-    it 'creates a new poem object' do
-      get :index
-      assigns(:poem).should be_new_record
-    end
-
-    it 'creates an array of all poems in reverse order' do
-      poems_arr = []
-      5.times{poems_arr << FactoryGirl.create(:poem)}
-
-      get :index
-      assigns(:poems).should eq(poems_arr.reverse)
+    it 'creates an array of all poems' do
+      poems_arr = JSON.parse(FactoryGirl.create_list(:poem, 5).to_json)
+      get :index, :format => :json
+      expect(response).to be_success
+      expect(json).to eq(poems_arr)
     end
   end
 
@@ -22,9 +15,9 @@ describe PoemsController do
     
     let(:nil_content) { {content: nil} }
     let(:new_poem_attributes) {FactoryGirl.attributes_for(:poem)}
-    let(:wrong_params) {post :create, poem: (nil_content)}
-    let(:correct_params) {post :create, poem: (new_poem_attributes)}
-    let(:twitter_client) {double(tweet: true)}
+    let(:wrong_params) {post :create, poem: (nil_content), :format => :json}
+    let(:correct_params) {post :create, poem: (new_poem_attributes), :format => :json}
+    let(:twitter_client) {double("twitter client", tweet: true)}
 
     context 'if user is logged in' do
       before(:each) do
@@ -33,79 +26,44 @@ describe PoemsController do
       end
 
       context 'when content is present and does not exceed character count in params' do        
-        before { TwitterAPI.stub(:new).and_return(twitter_client) }
+        before do
+         TwitterAPI.stub(:new).and_return(twitter_client)
+         correct_params
+        end
 
         it 'creates a new poem' do
-          correct_params
           Poem.all.count.should eq(1)
         end
 
-        it 'sends content to Twitter' do 
-          twitter_client.should_receive(:tweet).with(new_poem_attributes[:content])
+        it 'sends content to Twitter' do
           correct_params
+          expect(twitter_client).to have_received(:tweet).with(new_poem_attributes[:content])
         end
 
-        it 'redirects to home page' do
+        it 'returns the created poem object' do
           correct_params
-          expect(response).to redirect_to root_path
+          poem = Poem.first.to_json(include: { poet: { only: [:id, :name] } })
+          expect(response).to be_success
+          expect(json).to eq(JSON.parse(poem))
         end
       end
 
       context 'when content not present in params' do
-        before { TwitterAPI.stub(:new).and_return(twitter_client) }
-
-        it 'does not create a new poem' do
-          wrong_params
-          Poem.all.count.should eq(0)
-        end
-
-        it 'does not send content to Twitter' do
-          wrong_params
-          expect(twitter_client).to_not have_received(:tweet)
-        end
-
-        it 'redirects to home page' do
-          wrong_params
-          expect(response).to render_template(:index)
-        end
+        before { wrong_params }
+        it_behaves_like 'failed poem creation'
       end
 
       context 'when content is over 140 characters' do
-        let(:wrong_params) {post :create, poem: ({content: 'h'*141})}
-
-        let(:twitter_client) {double(tweet: true)}
-        before { TwitterAPI.stub(:new).and_return(twitter_client) }
-
-        it 'does not create a new poem' do
-          wrong_params
-          Poem.all.count.should eq(0)
-        end
-
-        it 'does not send content to Twitter' do
-          wrong_params
-          expect(twitter_client).to_not have_received(:tweet)
-        end
-
-        it 'redirects to home page' do
-          wrong_params
-          expect(response).to render_template(:index)
-        end
+        before { post :create, poem: ({content: 'h'*141}), :format => :json }
+        it_behaves_like 'failed poem creation'
       end
     end
 
     context 'if user is not logged in' do
-      it 'does not create a new poem' do
-        correct_params
-        Poem.all.count.should eq(0)
-      end
-
-      it 'does not send content to Twitter' do
-        correct_params
-        expect(twitter_client).to_not have_received(:tweet)
-      end
+      before { correct_params }
+      it_behaves_like 'failed poem creation'
 
       it 'redirects to new poet path' do
-        correct_params
         expect(response).to redirect_to new_poet_path
       end
     end
