@@ -56,7 +56,8 @@ RSpec.configure do |config|
   end
 end
 
-#Capybara.default_host = 'http://localhost:3000'
+Capybara.default_host = 'http://example.org'
+#Capybara.default_wait_time = 60
 
 OmniAuth.config.test_mode = true
 OmniAuth.config.add_mock(:twitter, {

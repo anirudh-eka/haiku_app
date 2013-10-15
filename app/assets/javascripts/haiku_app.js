@@ -5,6 +5,7 @@ window.HaikuApp = {
   Routers: {},
 
   initialize: function(data) {
+
     this.poems = new HaikuApp.Collections.Poems(data.poems);
     // this.poets = new HaikuApp.Collections.Poets(data.poets);
     if (data.currentUser) {
