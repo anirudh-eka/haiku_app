@@ -10,7 +10,7 @@ HaikuApp.Views.Poem = Backbone.View.extend({
 
     this.$el.html(JST['poems/show']({ poem: this.model.toJSON(), 
       author: this.model.author(),
-      currentUser: HaikuApp.currentUser, 
+      loggedIn: Boolean(HaikuApp.currentUser), 
       snapped: snapped}))
     return this
   }
