@@ -1,5 +1,5 @@
 class PoemsController < ApplicationController
-  skip_before_action :require_login, except: [:create, :update, :snap, :unsnap]
+  skip_before_action :require_login, only: [:index]
   respond_to :json
 
   def index
@@ -17,26 +17,6 @@ class PoemsController < ApplicationController
 
   def update
     respond_with(@poem, include: { poet: { only: [:id, :name] } })
-  end
-
-  def snap
-    poem = Poem.find(params[:id])
-    unless poem.snaps.find_by_poet_id(session[:poet_id])
-      poem.snaps.create(poet_id: session[:poet_id])
-      poem.snap_count += 1
-      poem.save 
-    end
-    redirect_to root_path
-  end
-
-  def unsnap
-    poem = Poem.find(params[:id])
-    if snap = poem.snaps.find_by_poet_id(session[:poet_id])
-      snap.destroy
-      poem.snap_count -= 1
-      poem.save 
-    end
-    redirect_to root_path
   end
 
   private
