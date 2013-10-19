@@ -3,7 +3,12 @@ HaikuApp.Views.Poem = Backbone.View.extend({
   className: 'poem',
   
   events: {
-    'click .snap' : 'snap'
+    'click .snap' : 'snap',
+    'click .unsnap' : 'unsnap'
+  },
+  
+  initialize: function() {
+    this.listenTo(this.model, 'change', this.render)
   },
 
   render: function() {
@@ -27,16 +32,13 @@ HaikuApp.Views.Poem = Backbone.View.extend({
 
   snap: function() {
     var snapCount = this.model.get('snap_count')
-    console.log(snapCount)
     snapCount += 1
+    this.model.save({snap_count: snapCount})
+  },
 
-    this.model.save({snap_count: snapCount}, { 
-      success: function() {
-      console.log('success')
-      },
-      error: function() {
-        console.log('failure')
-      }
-    });
-  }
+  unsnap: function() {
+    var snapCount = this.model.get('snap_count')
+    snapCount -= 1
+    this.model.save({snap_count: snapCount})
+  },
 });
