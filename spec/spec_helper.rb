@@ -42,6 +42,7 @@ RSpec.configure do |config|
   config.order = "random"
   config.include Capybara::DSL 
   config.include Requests::JsonHelpers
+  config.filter_run_excluding :integration => true
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation

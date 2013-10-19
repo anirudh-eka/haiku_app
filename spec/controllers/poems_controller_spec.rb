@@ -19,7 +19,7 @@ describe PoemsController do
     let(:correct_params) {post :create, poem: (new_poem_attributes), :format => :json}
     let(:twitter_client) {double("twitter client", tweet: true)}
 
-    context 'if user is logged in' do
+    context 'when user is logged in' do
       before(:each) do
         basho = FactoryGirl.create(:poet)       
         session[:poet_id] = basho.id
@@ -59,7 +59,7 @@ describe PoemsController do
       end
     end
 
-    context 'if user is not logged in' do
+    context 'when user is not logged in' do
       before { correct_params }
       it_behaves_like 'failed poem creation'
       it_behaves_like 'user not logged in'
@@ -68,17 +68,61 @@ describe PoemsController do
 
   describe 'PUT #update' do
     let(:poem) { FactoryGirl.create(:poem) }
+    let(:correct_params) {put :update, poem: new_poem_attributes, id: poem, :format => :json}
     let(:new_poem_attributes) do
       new_attributes = FactoryGirl.attributes_for(:poem)
       new_attributes[:content] = "something else"
-      return new_attributes
+      new_attributes
     end
-
-    before(:each) do
-      put :update, poem: new_poem_attributes, id: poem, :format => :json
+    let(:invalid_attributes) do
+      invalid_attributes = FactoryGirl.attributes_for(:poem)
+      invalid_attributes[:content] = ""
+      invalid_attributes
     end
     
-    context 'if user is not logged in' do
+    context 'when user is logged in' do
+      before(:each) do
+        basho = FactoryGirl.create(:poet)       
+        session[:poet_id] = basho.id
+      end
+
+      context 'when user is the author' do
+        before(:each) do
+          basho = Poet.find(session[:poet_id])
+          basho.poems << poem
+        end
+
+        context 'when new attributes are valid' do
+          before { correct_params }
+          it_behaves_like 'successful poem update' do
+            let(:new_attributes) { new_poem_attributes }
+            let(:model) { poem }          
+          end
+        end
+
+        context 'when new attributes are invalid' do
+          before { put :update, poem: invalid_attributes, id: poem, :format => :json}
+          it_behaves_like 'failed poem update' do
+            let(:new_attributes) { invalid_attributes }
+            let(:model) { poem }          
+          end
+          it 'sends an error' do
+            expect(response).to_not be_success
+          end
+        end 
+      end
+
+      context 'when user is not the author' do
+        before { correct_params }
+        it_behaves_like 'failed poem update' do
+          let(:new_attributes) { new_poem_attributes }
+          let(:model) { poem }          
+        end
+      end
+    end
+
+    context 'when user is not logged in' do
+      before { correct_params }
       it_behaves_like 'failed poem update' do
         let(:new_attributes) { new_poem_attributes }
         let(:model) { poem }

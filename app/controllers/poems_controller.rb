@@ -16,12 +16,19 @@ class PoemsController < ApplicationController
   end
 
   def update
-    respond_with(@poem, include: { poet: { only: [:id, :name] } })
+    @poem = Poem.find(params[:id])
+    
+    if current_user == @poem.poet
+      @poem.update(poem_params)
+      respond_with(@poem, include: { poet: { only: [:id, :name] } })
+    else
+      respond_with(@poem, include: { poet: { only: [:id, :name] } })
+    end
   end
 
   private
 
   def poem_params
-    params.require(:poem).permit(:title, :content)
+    params.require(:poem).permit(:title, :content, :snap_count)
   end
 end

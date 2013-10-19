@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Root", :js => true do
+describe "Root", :js => true, integration: true do
 
   let(:new_poem) { FactoryGirl.create(:poem) }
   let(:new_poet) { FactoryGirl.create(:poet) }

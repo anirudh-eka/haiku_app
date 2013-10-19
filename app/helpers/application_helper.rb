@@ -5,4 +5,7 @@ module ApplicationHelper
   def logged_in?
     session[:poet_id] ? true : false
   end
+  def current_user
+    Poet.find(session[:poet_id])
+  end
 end

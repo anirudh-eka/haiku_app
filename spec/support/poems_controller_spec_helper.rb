@@ -13,14 +13,27 @@ shared_examples_for 'failed poem creation' do
   end
 end
 
-shared_examples_for 'failed poem update' do
+shared_examples_for 'successful poem update' do
+  it 'changes contents of poem' do
+    expect(new_attributes).not_to contain_unique_pair_from(Poem.find(model.id))
+  end
 
+  it 'is successful' do
+    expect(response).to be_success
+  end
+end
+
+shared_examples_for 'failed poem update' do
   it 'does not change contents of poem' do
-    expect(new_attributes).to contain_unique_pair_from(model)
+    expect(new_attributes).to contain_unique_pair_from(Poem.find(model.id))
   end
 end
 
 shared_examples_for 'user not logged in' do
+  it 'sends an error status' do
+    expect(response).to_not be_success
+  end
+
   it 'redirects to new poet path' do
       expect(response).to redirect_to new_poet_path
   end
