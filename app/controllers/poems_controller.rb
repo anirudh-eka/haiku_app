@@ -1,45 +1,34 @@
 class PoemsController < ApplicationController
-  skip_before_action :require_login, except: [:create, :snap, :unsnap]
-  respond_to :html, :json
+  skip_before_action :require_login, only: [:index]
+  respond_to :json
 
   def index
-    respond_with(@poems = Poem.all)
+    @poems = Poem.all
+    respond_with(@poems, include: { poet: { only: [:id, :name] } })
   end
 
   def create
-    poet = Poet.find_by(session[:poet_id])
+    poet = Poet.find(session[:poet_id])
     @poem = poet.poems.new(poem_params)
-    if @poem.save
-      # TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(poem.content)
-      respond_with(@poem)
+
+    TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(@poem.content) if @poem.save
+    respond_with(@poem, include: { poet: { only: [:id, :name] } })
+  end
+
+  def update
+    @poem = Poem.find(params[:id])
+    
+    if current_user == @poem.poet
+      @poem.update(poem_params)
+      respond_with(@poem, include: { poet: { only: [:id, :name] } })
     else
-      respond_with(@poem)
+      respond_with(@poem, include: { poet: { only: [:id, :name] } })
     end
-  end
-
-  def snap
-    poem = Poem.find(params[:id])
-    unless poem.snaps.find_by_poet_id(session[:poet_id])
-      poem.snaps.create(poet_id: session[:poet_id])
-      poem.snap_count += 1
-      poem.save 
-    end
-    redirect_to root_path
-  end
-
-  def unsnap
-    poem = Poem.find(params[:id])
-    if snap = poem.snaps.find_by_poet_id(session[:poet_id])
-      snap.destroy
-      poem.snap_count -= 1
-      poem.save 
-    end
-    redirect_to root_path
   end
 
   private
 
   def poem_params
-    params.require(:poem).permit(:title, :content)
+    params.require(:poem).permit(:title, :content, :snap_count)
   end
 end

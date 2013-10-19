@@ -40,8 +40,10 @@ end
 group :test do
   gem 'faker'
   gem 'capybara'
-  #gem 'database_cleaner', '1.0.1'
+  gem 'database_cleaner', '1.0.1'
   gem "shoulda-matchers"
+  gem "launchy"
+  gem 'selenium-webdriver'
 end
 
 gem 'compass-rails' # you need this or you get an err

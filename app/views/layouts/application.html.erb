@@ -19,6 +19,7 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   </head>
   <body>
     <nav class="top-bar"  >
@@ -39,10 +40,8 @@
     </nav>
     <div class="row">
       <div class="large-12 columns">
-        <div id ='status-messager'></div>
         <%= yield %>
       </div>
     </div>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   </body>
 </html>
