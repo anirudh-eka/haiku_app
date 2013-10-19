@@ -23,4 +23,10 @@ class PoetsController < ApplicationController
       redirect_to poet_path(id: params[:id])
     end
   end
+
+  def snap
+  end
+
+  def unsnap
+  end
 end
