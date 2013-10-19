@@ -34,6 +34,7 @@ HaikuApp.Views.Poem = Backbone.View.extend({
     var snapCount = this.model.get('snap_count')
     snapCount += 1
     this.model.save({snap_count: snapCount})
+    HaikuApp.currentUser.snaps.create({poem_id: this.model.id})
   },
 
   unsnap: function() {
