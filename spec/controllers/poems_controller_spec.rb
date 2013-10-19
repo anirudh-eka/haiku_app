@@ -68,15 +68,21 @@ describe PoemsController do
 
   describe 'PUT #update' do
     let(:poem) { FactoryGirl.create(:poem) }
-    let(:new_poem_attributes) {FactoryGirl.attributes_for(:poem)[:content] = "something else"}
+    let(:new_poem_attributes) do
+      new_attributes = FactoryGirl.attributes_for(:poem)
+      new_attributes[:content] = "something else"
+      return new_attributes
+    end
 
     before(:each) do
-      poem
       put :update, poem: new_poem_attributes, id: poem, :format => :json
     end
     
     context 'if user is not logged in' do
-      it_behaves_like 'failed poem update'
+      it_behaves_like 'failed poem update' do
+        let(:new_attributes) { new_poem_attributes }
+        let(:model) { poem }
+      end
       it_behaves_like 'user not logged in'
     end
   end

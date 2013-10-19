@@ -14,7 +14,10 @@ shared_examples_for 'failed poem creation' do
 end
 
 shared_examples_for 'failed poem update' do
-  it 'does not change contents of poem'
+
+  it 'does not change contents of poem' do
+    expect(new_attributes).to contain_unique_pair_from(model)
+  end
 end
 
 shared_examples_for 'user not logged in' do
