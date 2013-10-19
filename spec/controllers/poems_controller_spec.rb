@@ -62,13 +62,25 @@ describe PoemsController do
     context 'if user is not logged in' do
       before { correct_params }
       it_behaves_like 'failed poem creation'
-
-      it 'redirects to new poet path' do
-        expect(response).to redirect_to new_poet_path
-      end
+      it_behaves_like 'user not logged in'
     end
   end
 
+  describe 'PUT #update' do
+    let(:poem) { FactoryGirl.create(:poem) }
+    let(:new_poem_attributes) {FactoryGirl.attributes_for(:poem)[:content] = "something else"}
+
+    before(:each) do
+      poem
+      put :update, poem: new_poem_attributes, id: poem, :format => :json
+    end
+    
+    context 'if user is not logged in' do
+      it_behaves_like 'failed poem update'
+      it_behaves_like 'user not logged in'
+    end
+  end
+  
   describe 'PUT #snap' do
     let(:poem) { FactoryGirl.create(:poem) }
     let(:poet) { FactoryGirl.create(:poet) }

@@ -1,5 +1,5 @@
 class PoemsController < ApplicationController
-  skip_before_action :require_login, except: [:create, :snap, :unsnap]
+  skip_before_action :require_login, except: [:create, :update, :snap, :unsnap]
   respond_to :json
 
   def index
@@ -12,6 +12,10 @@ class PoemsController < ApplicationController
     @poem = poet.poems.new(poem_params)
 
     TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(@poem.content) if @poem.save
+    respond_with(@poem, include: { poet: { only: [:id, :name] } })
+  end
+
+  def update
     respond_with(@poem, include: { poet: { only: [:id, :name] } })
   end
 

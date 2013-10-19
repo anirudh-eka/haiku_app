@@ -12,3 +12,13 @@ shared_examples_for 'failed poem creation' do
     expect(response).to_not be_success
   end
 end
+
+shared_examples_for 'failed poem update' do
+  it 'does not change contents of poem'
+end
+
+shared_examples_for 'user not logged in' do
+  it 'redirects to new poet path' do
+      expect(response).to redirect_to new_poet_path
+  end
+end
