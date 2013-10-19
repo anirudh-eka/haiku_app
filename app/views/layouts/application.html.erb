@@ -18,8 +18,8 @@
   	<%= javascript_include_tag "vendor/custom.modernizr" %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   </head>
   <body>
     <nav class="top-bar"  >
@@ -38,7 +38,10 @@
         </ul>
       </section>
     </nav>
-    <div class="row"><div class="large-12 columns"><%= yield %></div></div>
-    <%= javascript_include_tag "application" %>
+    <div class="row">
+      <div class="large-12 columns">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

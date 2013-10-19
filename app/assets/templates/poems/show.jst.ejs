@@ -1,0 +1,9 @@
+<h4 class='title'><%= poem.title %></h4>
+<h5 class='content'><%= poem.content %></h5>
+<h5 class='author small-9 small-centered columns'> -<%= author.name %></h5>
+
+<% if (poem.snap_count === 1) { %>
+  <p> 1 snap </p>
+<% } else {%>
+  <p><%=poem.snap_count%> snaps</p>
+<% } %>
