@@ -2,8 +2,8 @@ HaikuApp::Application.routes.draw do
   
   resources :poets, except: :create
   
-  post '/poets/:poet_id/snaps', to: 'poet#snap', as: 'poet_snap'
-  delete '/poets/:poet_id/snaps/:id', to: 'poet#unsnap', as: 'poet_unsnap'
+  post '/poets/:poet_id/snaps', to: 'poets#snap', as: 'snap'
+  delete '/poets/:poet_id/snaps/:id', to: 'poets#unsnap', as: 'unsnap'
   
   resources :poems, except: :new
  

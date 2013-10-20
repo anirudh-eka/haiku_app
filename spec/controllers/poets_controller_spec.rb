@@ -107,4 +107,34 @@ describe PoetsController do
     end
 
   end
+
+  context 'POST #snap' do
+    let(:poet) { FactoryGirl.create(:poet) }
+    let(:poem) { FactoryGirl.create(:poem) }
+    let(:snap) { poem.snaps.create }
+    let(:action) { post :snap, poet_id: (session[:poet_id] || 99), snap: snap.attributes, :format => :json}
+
+    context 'if user is logged in' do
+      before(:each) { session[:poet_id] = poet.id}
+
+      context 'when user has already snapped' do
+        before do
+          poet.snaps << snap
+        end
+        it_behaves_like 'failed snap creation'
+      end
+
+      context 'when user has not snapped' do 
+        before { action }
+        it_behaves_like 'successful snap creation'
+      end
+    end
+
+    context 'if user is not logged in' do
+      before { action }
+      it_behaves_like 'user not logged in'
+    end
+  end
+
+  context 'POST #unsnap'
 end

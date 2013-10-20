@@ -1,5 +1,6 @@
 class PoetsController < ApplicationController
   skip_before_action :require_login, only: [:new, :show]
+  respond_to :json
 
   def index
     @poets = Poet.all
@@ -25,8 +26,17 @@ class PoetsController < ApplicationController
   end
 
   def snap
+    poet = Poet.find(params[:poet_id])
+    @snap = poet.snaps.create(snap_params)
+    respond_with(@snap)
   end
 
   def unsnap
+  end
+
+  private
+
+  def snap_params
+    params.require(:snap).permit(:poem_id)
   end
 end
