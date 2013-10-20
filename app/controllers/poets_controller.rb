@@ -32,6 +32,12 @@ class PoetsController < ApplicationController
   end
 
   def unsnap
+    if params[:poet_id].to_i == session[:poet_id].to_i
+      @snap = Snap.find(params[:id]).destroy
+      respond_with(@snap)
+    else
+      respond_with(@snap)
+    end
   end
 
   private
