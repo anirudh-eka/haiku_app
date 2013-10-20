@@ -107,4 +107,63 @@ describe PoetsController do
     end
 
   end
+
+  context 'POST #snap' do
+    let(:poet) { FactoryGirl.create(:poet) }
+    let(:poem) { FactoryGirl.create(:poem) }
+    let(:snap) { poem.snaps.create }
+    let(:action) { post :snap, poet_id: (session[:poet_id] || 99), snap: snap.attributes, :format => :json}
+
+    context 'if user is logged in' do
+      before(:each) { session[:poet_id] = poet.id}
+
+      context 'when user has already snapped' do
+        before do
+          poet.snaps << snap
+        end
+        it_behaves_like 'failed snap creation'
+      end
+
+      context 'when user has not snapped' do 
+        before { action }
+        it_behaves_like 'successful snap creation'
+      end
+    end
+
+    context 'if user is not logged in' do
+      before { action }
+      it_behaves_like 'user not logged in'
+    end
+  end
+
+  context 'POST #unsnap' do
+    let(:poet) { FactoryGirl.create(:poet) }
+    let(:poem) { FactoryGirl.create(:poem) }
+    let(:snap) { poet.snaps.create(poem_id: poem.id)}
+    let(:action) { delete :unsnap, poet_id: poet.id, id: snap.id, snap: snap.attributes, :format => :json}
+
+    context 'if user is logged in' do
+      context 'when user is the poet associated with the snap to be deleted' do
+        before(:each) do
+         snap
+         session[:poet_id] = poet.id
+         action
+        end
+        it_behaves_like 'successful snap deletion'
+      end
+
+      context 'when user is not the poet associated with the snap to be deleted' do
+        before(:each) do
+          snap
+          session[:poet_id] = (poet.id.to_i + 1)
+        end
+        it_behaves_like 'failed snap deletion'
+      end 
+    end
+
+    context 'if user is not logged in' do
+      before { action }
+      it_behaves_like 'user not logged in'
+    end
+  end
 end
