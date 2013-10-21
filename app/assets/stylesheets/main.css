@@ -1,7 +1,9 @@
 html {
-  background: url('carlton_birds.png') no-repeat center center fixed;
+  /*background: url('carlton_birds.png') no-repeat center center fixed;*/
   /*background: url('birds_in_tree.jpg') no-repeat center center fixed;*/
-  background-size: cover;
+  /*background-size: cover;*/
+  background-color: #77E4FF;
+  /*background-color: #4FBD73;*/
 }
 
 body {
@@ -17,15 +19,25 @@ body {
 }
 
 .success {
-  color: #859900;
+  /*color: #859900;*/
+  color: #4FBD73;
 }
 
 .error {
-  color: #dc322f;
+  /*color: #dc322f;*/
+  color: #E9715A;
 }
 
 .title-area .name h1 a {
+  /*color: #EA766C;*/
   color: #dc322f;
+}
+
+.top-bar {
+  background-color: #FFFFFF;;
+  /*background-color: rgb(238, 232, 213);*/
+
+  border-bottom: 1px solid gray;
 }
 
 #left-bar{
@@ -33,7 +45,11 @@ body {
 }
 
 #poem-list {
-  background-color: rgba(240, 240, 240, 0.4);
+  /*background-color: rgba(240, 240, 240, 0.4);*/
+  background-color: #FFFFFF;
+  /*background-color: #B2F0FF;*/
+  border-radius: 20px;
+  border: 1px solid gray;
   padding: 0px;
 }
 
@@ -42,7 +58,7 @@ body {
   /*background-color: rgba(0, 43, 54, 0.9);*/
   min-height: 130px;
   text-align: center;
-  border-top: 1px solid #C9B7AD;
+  border-bottom: 1px solid gray;
 }
 
 .poem .title {
