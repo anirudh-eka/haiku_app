@@ -42,14 +42,15 @@ body {
 
 #left-bar{
   /*position: fixed;*/
-}
-
-#poem-list {
-  /*background-color: rgba(240, 240, 240, 0.4);*/
   background-color: #FF965A;
   /*background-color: #B2F0FF;*/
   border-radius: 20px;
   border: 1px solid rgb(252, 130, 100);
+  padding: 20px;
+}
+
+#poem-list {
+  /*background-color: rgba(240, 240, 240, 0.4);*/
   padding: 0px;
 }
 
