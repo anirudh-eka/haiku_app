@@ -9,8 +9,10 @@ HaikuApp.Views.Poem = Backbone.View.extend({
   
   initialize: function() {
     this.listenTo(this.model, 'change', this.render)
-    this.listenTo(HaikuApp.currentUser.snaps, 'add', this.render)
-    this.listenTo(HaikuApp.currentUser.snaps, 'remove', this.render)
+    if (HaikuApp.currentUser) {
+      this.listenTo(HaikuApp.currentUser.snaps, 'add', this.render)
+      this.listenTo(HaikuApp.currentUser.snaps, 'remove', this.render)
+    }
   },
 
   render: function() {
