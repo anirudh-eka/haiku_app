@@ -19,7 +19,6 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
   },
 
   countContent: function(e) {
-      console.log('hi')
     this.updateSubmit()
     this.contentCounter.render()
   },

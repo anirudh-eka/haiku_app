@@ -31,9 +31,9 @@
         <ul class="right">
           <li class="divider"></li>
           <% unless logged_in? %>
-            <li><%= link_to "Sign In with Twitter", "/auth/twitter" %></li>
+            <li><%= link_to "Sign In with Twitter", "/auth/twitter", :id => 'signin' %></li>
           <% else %>
-            <li><%= link_to "Sign Out", signout_path %></li>
+            <li><%= link_to "Sign Out", signout_path, :id => 'signout' %></li>
           <% end %>
         </ul>
       </section>
