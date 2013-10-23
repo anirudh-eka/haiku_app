@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe PoetsController do
-  
   let(:new_poet) { FactoryGirl.create(:poet) }      
   
   describe 'GET #index' do
@@ -12,17 +11,16 @@ describe PoetsController do
       end
     end
     
-    context "if user is signed in " do
+    context "if user is signed in" do
       before(:each) do
         session[:poet_id] = new_poet.id
       end
 
       it "should return an array of all poets" do
-        poets_array = [new_poet]
-        5.times{poets_array << FactoryGirl.create(:poet)}
+        FactoryGirl.create_list(:poet, 5)
 
         get :index
-        assigns(:poets).should eq(poets_array)
+        assigns(:poets).should eq(Poet.all)
       end
     end
   end
