@@ -1,0 +1,28 @@
+<div id ='left-bar' class="large-5 columns">
+<% if logged_in? %>
+    <div id ='new-poem-container'></div>
+<% end %>
+</div>
+
+
+<div id ='poem-list' class="large-6 large-offset-1 columns"></div>
+
+<script type="text/javascript">
+
+     $(function () {
+       var div = $('<div></div>');
+       div.html($('#bootstrap').text());
+       var data = JSON.parse(div.text());
+
+       HaikuApp.initialize(data);
+     });
+</script>
+
+<script type="text/json" id="bootstrap">
+  {
+    "poems": <%= @poems.to_json(include: 
+                                { poet: { only: [:id, :name] } })%>,
+    "poets": <%= @poets.to_json(only: [:id, :name]) %>,
+    "currentUser": <%= @current_user.to_json(only: [:id, :name],:include => :snaps) %> 
+  }
+</script>

@@ -14,4 +14,10 @@ describe Poem do
       FactoryGirl.build(:poem, content: "h"*141).should_not be_valid
     end
   end
+
+  context 'poem_count' do
+    it 'should not allow for poem count to be less than 0' do
+      FactoryGirl.build(:poem, snap_count: -1).should_not be_valid
+    end
+  end
 end
