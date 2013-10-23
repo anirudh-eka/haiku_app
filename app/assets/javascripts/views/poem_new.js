@@ -3,14 +3,18 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
 
   events: {
     "submit #new-poem" : "submit",
+    "keyup #title" : "countTitle",
     "keyup #content" : "countContent"
   },
 
   initialize: function() {
     this.render();
-    this.maxCount = 140
+    this.maxContentCount = 140
+    this.maxTitleCount = 40
+
     this.messager = new HaikuApp.Views.StatusMessager({el: '#poem-create-messager'})
-    this.contentCounter = new HaikuApp.Views.Counter({el: '#content-counter', maxCount: this.maxCount, recording: '#content'})
+    this.titleCounter = new HaikuApp.Views.Counter({el: '#title-counter', maxCount: this.maxTitleCount, recording: '#title'})
+    this.contentCounter = new HaikuApp.Views.Counter({el: '#content-counter', maxCount: this.maxContentCount, recording: '#content'})
     var self = this
 
     this.listenTo(HaikuApp.navbar, 'signout', function(){
@@ -23,22 +27,23 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     return this
   },
   
+  countTitle: function(e) {
+    this.updateSubmit(this.titleCounter.currentCount(), this.maxTitleCount)
+    this.titleCounter.render()
+  },
+
   countContent: function(e) {
-    this.updateSubmit()
+    this.updateSubmit(this.contentCounter.currentCount(), this.maxContentCount)
     this.contentCounter.render()
   },
 
-  updateSubmit: function() {
-    if (this.currentCount() > 0 && this.currentCount() <= this.maxCount ) {
+  updateSubmit: function(currentCount, maxCount) {
+    if (currentCount > 0 && currentCount <= maxCount ) {
       $('input[type="submit"]').removeAttr('disabled')
     } else {
       $('input[type="submit"]').attr('disabled', true)
     }
 
-  },
-
-  currentCount: function() {
-    return this.contentCounter.currentCount()
   },
 
   submit: function(e) {
