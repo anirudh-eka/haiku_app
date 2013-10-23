@@ -1,9 +1,9 @@
 class Poet < ActiveRecord::Base
-   has_many :poems, dependent: :destroy
-   has_many :snaps
+  has_many :poems, dependent: :destroy
+  has_many :snaps
 
-   validates_presence_of :name, :provider, :uid
-   validates :name, length: { maximum: 20 }
+  validates_presence_of :name, :provider, :uid
+  validates :name, length: { maximum: 20 }
 
   def self.create_with_omniauth(auth)
     create! do |poet|

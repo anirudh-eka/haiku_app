@@ -9,6 +9,10 @@ HaikuApp.Views.Poem = Backbone.View.extend({
   
   initialize: function() {
     this.listenTo(this.model, 'change', this.render)
+    if (HaikuApp.currentUser) {
+      this.listenTo(HaikuApp.currentUser.snaps, 'add', this.render)
+      this.listenTo(HaikuApp.currentUser.snaps, 'remove', this.render)
+    }
   },
 
   render: function() {
@@ -26,19 +30,21 @@ HaikuApp.Views.Poem = Backbone.View.extend({
   },
 
   renderSnapButton: function() {
-    var snapped = HaikuApp.currentUser.snapped(this.model.id)
-    return JST['snaps/button_show']({ snapped: snapped })
+    this.snap = HaikuApp.currentUser.snapped(this.model.id)
+    return JST['snaps/button_show']({ snapped: this.snap })
   },
 
   snap: function() {
     var snapCount = this.model.get('snap_count')
     snapCount += 1
     this.model.save({snap_count: snapCount})
+    HaikuApp.currentUser.snaps.create({poem_id: this.model.id}, {wait: true});
   },
 
   unsnap: function() {
     var snapCount = this.model.get('snap_count')
     snapCount -= 1
     this.model.save({snap_count: snapCount})
+    this.snap.destroy({wait: true})
   },
 });

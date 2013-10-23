@@ -5,7 +5,6 @@ HaikuApp.Models.CurrentUser = Backbone.Model.extend({
   },
 
   snapped: function(poemId) {
-    return Boolean(this.snaps.findWhere({poem_id: poemId}))
+    return this.snaps.findWhere({poem_id: poemId})
   }
-
 });

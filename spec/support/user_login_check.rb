@@ -4,6 +4,6 @@ shared_examples_for 'user not logged in' do
   end
 
   it 'redirects to new poet path' do
-      expect(response).to redirect_to new_poet_path
+    expect(response).to redirect_to new_poet_path
   end
 end
