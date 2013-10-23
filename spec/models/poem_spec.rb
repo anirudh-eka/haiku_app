@@ -4,6 +4,12 @@ describe Poem do
   it { should belong_to(:poet) }
   it { should have_many(:snaps) }
 
+  context "title" do
+    it "should be no greater than 40 characters" do
+      FactoryGirl.build(:poem, title: "h" * 41).should_not be_valid
+    end
+  end
+
   context "content" do
     it "should be present" do 
       FactoryGirl.build(:poem, content: nil).should_not be_valid

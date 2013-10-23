@@ -4,6 +4,7 @@ class Poem < ActiveRecord::Base
 
   validates_presence_of :content, message: "What is a poem without words?"
   validates_length_of :content, maximum: 140, message: "Words are like light, enough can give you sight, too much can make you blind"
+  validates_length_of :title, maximum: 40
   validate :snap_count_cannot_be_negative
   
   def snap_count_cannot_be_negative
