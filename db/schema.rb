@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20130924163331) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "poems", force: true do |t|
     t.string   "title"
     t.text     "content"
@@ -40,6 +43,6 @@ ActiveRecord::Schema.define(version: 20130924163331) do
     t.datetime "updated_at"
   end
 
-  add_index "snaps", ["poem_id", "poet_id"], name: "index_snaps_on_poem_id_and_poet_id", unique: true
+  add_index "snaps", ["poem_id", "poet_id"], name: "index_snaps_on_poem_id_and_poet_id", unique: true, using: :btree
 
 end
