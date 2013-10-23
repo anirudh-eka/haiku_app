@@ -6,14 +6,12 @@ HaikuApp.Views.NavBar = Backbone.View.extend({
 
   signout: function(e) {
     e.preventDefault();
-    console.log('clicked')
     var url = $('#signout').attr('href')
     var self = this
     $.get( url, function() {
       self.changetoSignin()
+      HaikuApp.currentUser = null
       self.trigger('signout')
-    }).fail(function() {
-      console.log( "error" );
     })
    },
 
