@@ -5,7 +5,7 @@ html {
   /*background-color: #77E4FF;*/
   /*background-color: #FFBF79;*/
   /*background-color: #BDC3C7;*/
-  background-color: #EED0BD;
+  background-color: white;
   border: 5px solid black;
 }
 
@@ -38,16 +38,19 @@ body {
 
 .top-bar {
   /*background-color: #FFBF79;*/
-  background-color: #2C3E50;
-  /*background-color: rgb(238, 232, 213);*/
+  /*background-color: #2C3E50;*/
+  background-color: #FFEDD5;
 
-  border-bottom: 1px solid gray;
+  border-bottom: 2px solid black;
 }
 
 /* Poem New*/
+
 #left-bar {
   /*position: fixed;*/
-  background-color: #ECF0F1;
+  /*background-color: #ECF0F1;*/
+  /*background-color: #D8ECFF;*/
+  background-color: #FFEDD5;
   /*background-color: #34495E;*/
   /*background-color: #B2F0FF;*/
   /*border-radius: 20px;*/
@@ -74,7 +77,7 @@ textarea {
 .button-custom, .button-custom-good, .button-custom-bad {
   border: 1px solid black;
   cursor: pointer;
-  color: white;
+  color: black;
   font-size: 1em;
   padding: 10px;
   display: inline-block;
@@ -112,7 +115,8 @@ textarea {
 /*Poem Index*/
 
 #poem-list {
-  background-color: #ECF0F1;
+  /*background-color: #ECF0F1;*/
+  background-color: #FFEDD5;
   /*background-color: rgba(240, 240, 240, 0.4);*/
   border: 5px solid black;
   padding: 0px;
