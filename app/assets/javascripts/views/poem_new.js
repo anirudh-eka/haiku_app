@@ -11,12 +11,11 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     this.render();
     this.maxContentCount = 140
     this.maxTitleCount = 40
-
-    this.messager = new HaikuApp.Views.StatusMessager({el: '#poem-create-messager'})
+    this.setupMessager() 
     this.titleCounter = new HaikuApp.Views.Counter({el: '#title-counter', maxCount: this.maxTitleCount, recording: '#title'})
     this.contentCounter = new HaikuApp.Views.Counter({el: '#content-counter', maxCount: this.maxContentCount, recording: '#content'})
-    var self = this
 
+    var self = this
     this.listenTo(HaikuApp.navbar, 'signout', function(){
       self.remove()  
     });
@@ -25,6 +24,12 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
   render: function() {
     this.$el.html(JST['poems/new']())
     return this
+  },
+
+  setupMessager: function() {
+    this.messager = new HaikuApp.Views.StatusMessager({el: '#poem-create-messager'})
+    var welcomeMsg = 'Welcome ' + HaikuApp.currentUser.get('name') + '! Please share a haiku or short poem with us'
+    this.messager.renderMsg(welcomeMsg, 'success')
   },
   
   countTitle: function(e) {
