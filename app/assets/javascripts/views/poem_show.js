@@ -19,8 +19,9 @@ HaikuApp.Views.Poem = Backbone.View.extend({
     this.$el.html(this.renderPoem());
     
     if (HaikuApp.currentUser) {
-      this.$el.append(this.renderSnapButton());
+      this.$el.children('.snap-area').append(this.renderSnapButton());
     }
+    this.$el.children('.snap-area').append(this.renderSnapCount());
 
     return this
   },
@@ -32,6 +33,10 @@ HaikuApp.Views.Poem = Backbone.View.extend({
   renderSnapButton: function() {
     this.snap = HaikuApp.currentUser.snapped(this.model.id)
     return JST['snaps/button_show']({ snapped: this.snap })
+  },
+
+  renderSnapCount: function() {
+    return JST['poems/snap_count']({ poem: this.model.toJSON() })  
   },
 
   snap: function() {

@@ -3,7 +3,10 @@ html {
   /*background: url('birds_in_tree.jpg') no-repeat center center fixed;*/
   /*background-size: cover;*/
   /*background-color: #77E4FF;*/
-  background-color: #FFBF79;
+  /*background-color: #FFBF79;*/
+  /*background-color: #BDC3C7;*/
+  background-color: #EED0BD;
+  border: 5px solid black;
 }
 
 body {
@@ -20,12 +23,12 @@ body {
 
 .success {
   /*color: #859900;*/
-  color: #4FBD73;
+  color: #2ECC71;
 }
 
 .error {
   /*color: #dc322f;*/
-  color: #E9715A;
+  color: #E74C3C;
 }
 
 .title-area .name h1 a {
@@ -34,39 +37,120 @@ body {
 }
 
 .top-bar {
-  background-color: #FFFFFF;;
+  /*background-color: #FFBF79;*/
+  background-color: #2C3E50;
   /*background-color: rgb(238, 232, 213);*/
 
   border-bottom: 1px solid gray;
 }
 
-#left-bar{
+/* Poem New*/
+#left-bar {
   /*position: fixed;*/
-  background-color: #FF965A;
+  background-color: #ECF0F1;
+  /*background-color: #34495E;*/
   /*background-color: #B2F0FF;*/
-  border-radius: 20px;
-  border: 1px solid rgb(252, 130, 100);
+  /*border-radius: 20px;*/
+  border: 5px solid black;
   padding: 20px;
 }
 
+#left-bar label {
+  /*color: #dc322f;*/
+  font-size: 2em;
+  font-family: Lato;
+}
+
+#left-bar input, textarea {
+  border: 1px solid black;
+} 
+
+textarea {
+  resize: none;
+  height: 8em;
+}
+
+
+.button-custom, .button-custom-good, .button-custom-bad {
+  border: 1px solid black;
+  cursor: pointer;
+  color: white;
+  font-size: 1em;
+  padding: 10px;
+  display: inline-block;
+}
+
+.button-custom:hover {
+  background-color: #16A085;
+}
+
+
+.button-custom:disabled {
+  background-color: #BDC3C7
+}
+
+.button-custom {
+  background-color: #1ABC9C;
+}
+
+.button-custom-good {
+  background-color: #2ECC71;
+}
+
+.button-custom-good:hover {
+  background-color: #27AE60;
+}
+
+.button-custom-bad {
+  background-color: #E74C3C;
+}
+
+.button-custom-bad:hover {
+  background-color: #C0392B;
+}
+
+/*Poem Index*/
+
 #poem-list {
+  background-color: #ECF0F1;
   /*background-color: rgba(240, 240, 240, 0.4);*/
+  border: 5px solid black;
   padding: 0px;
 }
+
+/*poem show*/
 
 .poem {
   /*background-color: rgba(238, 232, 213, 0.8);*/
   /*background-color: rgba(0, 43, 54, 0.9);*/
   min-height: 130px;
   text-align: center;
-  border-bottom: 1px solid #FFBF79;
+  /*border-bottom: 1px solid #FFBF79;*/
+  border-bottom: 5px solid black;
 }
 
 .poem .title {
-  color: #586e75;
+  font-size: 1.5em;
+  font-family: Lato;
 }
 
 .poem .author {
+  font-family: Lato;
   text-align: right;
-  color:#2aa198;
+  color:#E74C3C;
 }
+
+.snap, .unsnap {
+  margin: 2em .7em 2em 0em;
+  width: 5em;
+  text-align: center;
+}
+.snap_count {
+  display: inline-block;
+}
+
+.snap-area {
+  text-align: left;
+  padding-left: 2.5em;
+}
+

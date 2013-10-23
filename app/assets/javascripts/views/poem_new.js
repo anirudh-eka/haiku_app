@@ -14,7 +14,6 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     var self = this
 
     this.listenTo(HaikuApp.navbar, 'signout', function(){
-    console.log('signedout')
     self.remove()  
     });
   },
