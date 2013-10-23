@@ -16,7 +16,7 @@ HaikuApp.Views.PoemIndex = Backbone.View.extend({
   },
 
   addOne: function(model) {
-    var poemView = new HaikuApp.Views.Poem({model: model})
+    var poemView = new HaikuApp.Views.Poem({model: model, currentUser: this.currentUser})
     this.$el.prepend(poemView.render().$el);
     return this
   }
