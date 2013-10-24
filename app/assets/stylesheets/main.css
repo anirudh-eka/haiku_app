@@ -145,10 +145,24 @@ textarea {
   font-family: Lato;
 }
 
+.author-box {
+  display: block;
+  float: right;
+  padding-bottom: 0em;
+}
+
+.author-box img {
+  border: 1px solid black;
+}
+
+
 .poem .author {
   font-family: Lato;
-  text-align: right;
   color:#E74C3C;
+  display: inline;
+  padding-right: .2em;
+  padding-left: 0em;
+  vertical-align: 80%;
 }
 
 .snap, .unsnap {
