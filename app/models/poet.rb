@@ -12,6 +12,7 @@ class Poet < ActiveRecord::Base
       poet.oauth_secret = auth['credentials']['secret']
       poet.name = auth["info"]["name"]
       poet.uid = auth["uid"]
+      poet.prof_image_url = auth["info"]["image"]
     end
   end
 end
