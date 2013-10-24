@@ -4,7 +4,7 @@ class PoemsController < ApplicationController
 
   def index
     @poems = Poem.all
-    respond_with(@poems, include: { poet: { only: [:id, :name] } })
+    respond_with(@poems, include: { poet: { only: [:id, :name, :prof_image_url] } })
   end
 
   def create
