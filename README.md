@@ -7,4 +7,13 @@ Haicoup
 >
 > a little longer
 
-This is a twitter app for haikus. Just a nice little project for me to get used to Rails, OmniAuth, the Twitter API, and writing in 17 syllables. 
+A twitter application for haikus and other short poems. The user signs in with Twitter and may write or browse poems written which must have a content length of  140 characters. Each poem they submit will be saved by the app as well as tweeted on their behalf. 
+
+Technology:
+Ruby on Rails
+Backbone.JS
+RSpec & Capybara
+Twitter API
+Omniauth
+Foundation front end framework
+Brain that can think in 17 syllables
