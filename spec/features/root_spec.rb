@@ -1,9 +1,10 @@
 require 'spec_helper'
 
-describe "Root" do
+describe "Root", :js => true, integration: true do
 
   let(:new_poem) { FactoryGirl.create(:poem) }
-  before(:each) { visit root_url }
+  let(:new_poet) { FactoryGirl.create(:poet) }
+  before(:each) { visit root_path }
 
   it "has title" do 
     page.should have_content "HaiCoup"
@@ -14,7 +15,7 @@ describe "Root" do
       page.should have_link "Sign In with Twitter"
     end
 
-    it "should not have form to write new poem" do  
+    it "should not have form to write new poem" do 
       page.should_not have_field "Title"
       page.should_not have_field "Content"
       page.should_not have_button "Create Poem"
@@ -72,14 +73,14 @@ describe "Root" do
 
   context "if poems exist" do
     before do
-      new_poem
-      visit root_url
+      new_poet.poems << new_poem
+      visit root_path
     end
 
     it "should list all poems" do
       page.should have_content new_poem.title
       page.should have_content new_poem.content
-      page.should have_content "Anonymous"
+      page.should have_content new_poem.poet.name
     end 
   end
 

@@ -1,14 +1,13 @@
 HaikuApp::Application.routes.draw do
   
   resources :poets, except: :create
-  resources :poems, except: :new do
-    member do
-      put 'snap'
-      put 'unsnap'
-    end
-  end
-
-  root 'poems#index'
+  
+  post '/poets/:poet_id/snaps', to: 'poets#snap', as: 'snap'
+  delete '/poets/:poet_id/snaps/:id', to: 'poets#unsnap', as: 'unsnap'
+  
+  resources :poems, except: :new
+ 
+  root 'welcome#index' 
   get "/auth/:provider/callback" => "sessions#create"
   get "/signout" => "sessions#destroy", :as => :signout
 

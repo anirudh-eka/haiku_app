@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use postgresql as the database for Active Record
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -40,8 +40,10 @@ end
 group :test do
   gem 'faker'
   gem 'capybara'
-  #gem 'database_cleaner', '1.0.1'
+  gem 'database_cleaner', '1.0.1'
   gem "shoulda-matchers"
+  gem "launchy"
+  gem 'selenium-webdriver'
 end
 
 gem 'compass-rails' # you need this or you get an err
@@ -49,6 +51,7 @@ gem 'zurb-foundation', '~> 4.0.0'
 gem 'omniauth-twitter'
 gem 'twitter'
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'backbone-on-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
