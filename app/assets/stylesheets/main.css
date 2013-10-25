@@ -30,7 +30,7 @@ body {
   /*color: #dc322f;*/
   color: #E74C3C;
 }
-
+/*nav bar*/
 .title-area .name h1 a {
   /*color: #EA766C;*/
   color: #dc322f;
@@ -41,6 +41,7 @@ body {
   /*background-color: #2C3E50;*/
   /*background-color: #FFEDD5;*/
 
+  overflow: hidden;
   border-bottom: 2px solid black;
 }
 
