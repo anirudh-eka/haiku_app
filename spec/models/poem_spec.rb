@@ -21,18 +21,36 @@ describe Poem do
     end
   end
 
-  context 'poem_count' do
+  context 'snap_count' do
     it 'should not allow for poem count to be less than 0' do
       FactoryGirl.build(:poem, snap_count: -1).should_not be_valid
     end
   end
 
   context 'positive_update' do
+    let(:poem) {FactoryGirl.create(:poem)}
+
     context 'after poem is created' do
-      let(:poem) {FactoryGirl.create(:poem)}
       it 'should equal created_at' do
         expect(poem.positive_update).to eq(poem.created_at)
       end
+    end
+
+    context 'after poem count increases' do
+      before {poem.update_attributes!(snap_count: poem.snap_count + 1) }
+      it 'should equal updated_at' do
+        expect(poem.positive_update).to eq(poem.updated_at)
+      end
+    end
+
+    context 'after poem count decreases' do
+      before(:each) { poem.update_attributes!(snap_count: poem.snap_count - 1) }
+      it_behaves_like "positive update when snap count doesn't increase"
+    end
+
+    context 'after something else changes' do
+      before(:each) { poem.update_attributes!(content: poem.content + 'chicka boom') }
+      it_behaves_like "positive update when snap count doesn't increase"
     end
   end
 end
