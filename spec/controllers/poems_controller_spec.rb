@@ -3,12 +3,19 @@ require 'spec_helper'
 describe PoemsController do
 
   describe 'GET #index' do
-    it 'creates an array of all poems' do
-      poems_arr = JSON.parse(FactoryGirl.create_list(:poem, 5).to_json)
+
+    it 'creates an array of poems sorted by positive update' do
+      poems_arr = FactoryGirl.create_list(:poem, 5)
+      poems_arr[3].update_attributes!(snap_count: poems_arr[3].snap_count + 1)
+      poems_arr[2].update_attributes!(snap_count: poems_arr[3].snap_count - 1)
+      
+      JSON.parse(poems_arr.to_json)
       get :index, :format => :json
+
       expect(response).to be_success
-      expect(json).to eq(poems_arr)
+      expect(json).to eq(JSON.parse(Poem.order("positive_update Desc").to_json))
     end
+
   end
 
   describe 'POST #create' do
