@@ -3,7 +3,7 @@ class PoemsController < ApplicationController
   respond_to :json
 
   def index
-    @poems = Poem.all
+    @poems = Poem.order("positive_update ASC")
     respond_with(@poems, include: { poet: { only: [:id, :name, :prof_image_url] } })
   end
 
@@ -11,7 +11,9 @@ class PoemsController < ApplicationController
     poet = Poet.find(session[:poet_id])
     @poem = poet.poems.new(poem_params)
 
-    TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(@poem.content) if @poem.save
+    if @poem.save
+      #TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(@poem.content) 
+    end
     respond_with(@poem, include: { poet: { only: [:id, :name] } })
   end
 

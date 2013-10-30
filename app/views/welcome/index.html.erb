@@ -23,6 +23,6 @@
     "poems": <%= @poems.to_json(include: 
                                 { poet: { only: [:id, :name, :prof_image_url] } })%>,
     "poets": <%= @poets.to_json(only: [:id, :name]) %>,
-    "currentUser": <%= @current_user.to_json(only: [:id, :name],:include => :snaps) %> 
+    "currentUser": <%= current_user.to_json(only: [:id, :name, :prof_image_url],:include => :snaps) %> 
   }
 </script>

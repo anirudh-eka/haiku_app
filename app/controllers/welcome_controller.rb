@@ -3,8 +3,8 @@ class WelcomeController < ApplicationController
   respond_to :html, :json
 
   def index
-    @current_user = Poet.find(session[:poet_id]) if session[:poet_id]
-    @poems = Poem.all
+    # @current_user = Poet.find(session[:poet_id]) if session[:poet_id]
+    @poems = Poem.order("positive_update ASC")
     @poets = Poet.all
   end
 end

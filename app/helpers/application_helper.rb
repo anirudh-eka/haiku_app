@@ -6,6 +6,7 @@ module ApplicationHelper
     session[:poet_id] ? true : false
   end
   def current_user
-    Poet.find(session[:poet_id])
+    return Poet.find(session[:poet_id]) if logged_in?
+    nil
   end
 end
