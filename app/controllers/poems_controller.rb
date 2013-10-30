@@ -3,7 +3,7 @@ class PoemsController < ApplicationController
   respond_to :json
 
   def index
-    @poems = Poem.order("positive_update DESC")
+    @poems = Poem.order("positive_update ASC")
     respond_with(@poems, include: { poet: { only: [:id, :name, :prof_image_url] } })
   end
 

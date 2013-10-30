@@ -13,7 +13,7 @@ describe PoemsController do
       get :index, :format => :json
 
       expect(response).to be_success
-      expect(json).to eq(JSON.parse(Poem.order("positive_update Desc").to_json))
+      expect(json).to eq(JSON.parse(Poem.order("positive_update ASC").to_json))
     end
 
   end

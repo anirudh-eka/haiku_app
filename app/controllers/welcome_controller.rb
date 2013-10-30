@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
 
   def index
     # @current_user = Poet.find(session[:poet_id]) if session[:poet_id]
-    @poems = Poem.order("positive_update DESC")
+    @poems = Poem.order("positive_update ASC")
     @poets = Poet.all
   end
 end
