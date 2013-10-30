@@ -7,7 +7,7 @@ describe PoemsController do
     it 'creates an array of poems sorted by positive update' do
       poems_arr = FactoryGirl.create_list(:poem, 5)
       poems_arr[3].update_attributes!(snap_count: poems_arr[3].snap_count + 1)
-      poems_arr[2].update_attributes!(snap_count: poems_arr[3].snap_count - 1)
+      poems_arr[2].update_attributes!(snap_count: poems_arr[2].snap_count - 1)
       
       JSON.parse(poems_arr.to_json)
       get :index, :format => :json
