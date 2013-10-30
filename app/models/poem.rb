@@ -13,7 +13,10 @@ class Poem < ActiveRecord::Base
   end
 
   private
- 
+  def timestamp_attributes_for_create
+    super << :positive_update
+  end
+
   def timestamp_attributes_for_update
     return snap_count_changed_positively? ? super << :positive_update : super
   end

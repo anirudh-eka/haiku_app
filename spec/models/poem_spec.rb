@@ -34,6 +34,14 @@ describe Poem do
       it 'should equal created_at' do
         expect(poem.positive_update).to eq(poem.created_at)
       end
+
+      context 'when poem is instantiated, then saved' do
+        it 'should equal created_at' do
+          new_poem = Poem.new(content: 'valid poem')
+          new_poem.save
+          expect(new_poem.positive_update).to eq(new_poem.created_at)
+        end
+      end
     end
 
     context 'after poem count increases' do
