@@ -36,7 +36,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'pry'
-  gem 'jasmine'
+  gem 'jasmine-core', github: 'pivotal/jasmine'
+  gem 'jasmine', github: 'pivotal/jasmine-gem'
   gem 'dotenv-rails'
 end
 
