@@ -4,6 +4,12 @@ HaikuApp.Models.Poem = Backbone.Model.extend({
     title: ''
   },
 
+  validate: function(attrs) {
+    if (!attrs.content) {
+      return "what is a poem without words?";
+    }
+  },
+
   author: function() {
     if (this.get('poet')) {
       return this.get('poet')

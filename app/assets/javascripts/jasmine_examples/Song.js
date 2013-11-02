@@ -1,4 +1,5 @@
 function Song() {
+  this.name = 'forest whitaker'
 }
 
 Song.prototype.persistFavoriteStatus = function(value) {
