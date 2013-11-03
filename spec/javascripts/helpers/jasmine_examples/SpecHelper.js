@@ -10,6 +10,18 @@ beforeEach(function () {
           }
         }
       };
+    },
+
+    toHaveProperty: function() {
+      return {
+        compare: function (actual, expected) {
+          var object = actual;
+
+          return {
+            pass: expected in object 
+          }
+        }
+      }
     }
   });
 });
