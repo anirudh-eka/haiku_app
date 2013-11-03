@@ -33,10 +33,33 @@ describe("Snap Model", function() {
 
   describe('toJSON', function(){
     it('should return hash with the attributes as value to key snap', function(){
-      // expect('snap' in this.snap.toJSON()).toEqual(true);
       expect(this.snap.toJSON()).toHaveProperty('snap');
     });
   });
 
+  describe('validations', function(){
+    beforeEach(function(){
+      var collection = {
+        url: '/snaps'
+      }
+      this.snap.collection = collection
+    });
+
+    it("should not save when poem_id is absent", function() {
+      var eventSpy = jasmine.createSpy('eventSpy');
+      this.snap.on("invalid", eventSpy);
+      this.snap.save({"poem_id": ""});
+
+      expect(eventSpy).toHaveBeenCalled();
+    });
+
+    it("should not save when poet_id is absent", function() {
+      var eventSpy = jasmine.createSpy('eventSpy');
+      this.snap.on("invalid", eventSpy);
+      this.snap.save({"poet_id": ""});
+
+      expect(eventSpy).toHaveBeenCalled();
+    });
+  });
 
 });
