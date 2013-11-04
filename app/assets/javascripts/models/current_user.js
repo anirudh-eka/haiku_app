@@ -13,6 +13,7 @@ HaikuApp.Models.CurrentUser = Backbone.Model.extend({
     this.snaps.create({poem_id: poem.id}, {
       wait: true,
       success: function() {
+        console.log('success')
         poem.save({snap_count: poem.get('snap_count') + 1}, {wait: true});
       }
     })

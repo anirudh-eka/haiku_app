@@ -39,7 +39,6 @@ stylesheets:
 #
 helpers:
   - 'helpers/**/*.js'
-
 # spec_files
 #
 # Return an array of filepaths relative to spec_dir to include.

@@ -23,5 +23,7 @@
 //= require_tree ./routers
 //= require_tree ../templates
 //= require_tree .
+//= require sinon
+
 
 $(document).foundation();

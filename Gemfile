@@ -38,6 +38,9 @@ group :development, :test do
   gem 'pry'
   gem 'jasmine-core', github: 'pivotal/jasmine'
   gem 'jasmine', github: 'pivotal/jasmine-gem'
+  gem 'sinon-rails'
+  gem 'jasmine-sinon-rails'
+  gem "rosie" 
   gem 'dotenv-rails'
 end
 
