@@ -10,7 +10,7 @@ HaikuApp.Models.CurrentUser = Backbone.Model.extend({
 
   snap: function(poem) {
     var self = this
-    this.snaps.create({poem_id: poem.id}, {
+    this.snaps.create({poem_id: poem.id, poet_id: this.get('id')}, {
       wait: true,
       success: function() {
         poem.save({snap_count: poem.get('snap_count') + 1}, {wait: true});

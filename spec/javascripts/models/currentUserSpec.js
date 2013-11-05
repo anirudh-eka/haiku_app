@@ -33,6 +33,7 @@ describe("CurrentUser Model", function() {
     it("should create new snap object with poem passed in as param", function() {
       this.currentUser.snap(this.poem)
       expect(this.currentUserSnapsStub.calledOnce).toBeTruthy();
+      expect(this.currentUserSnapsStub.calledWith(this.poem.get('id'), this.currentUser.get('id')))
     });
     
     describe("when snap creation successful", function(){

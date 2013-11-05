@@ -52,10 +52,7 @@ describe("Poem Model", function() {
 
   describe('validations', function(){
     beforeEach(function(){
-      var collection = {
-        url: '/poems'
-      }
-      this.poem.collection = collection
+      this.poem.collection = new Backbone.Collection()
     });
 
     it("should not save when content is empty", function() {
