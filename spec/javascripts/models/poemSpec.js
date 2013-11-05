@@ -59,12 +59,11 @@ describe("Poem Model", function() {
     });
 
     it("should not save when content is empty", function() {
-      var eventSpy = jasmine.createSpy('eventSpy');
+      var eventSpy = sinon.spy();
       this.poem.on("invalid", eventSpy);
       this.poem.save({"content": ""});
-
-      expect(eventSpy).toHaveBeenCalled();
-      // consider a custom matcher to check error message
+      expect(eventSpy.calledOnce).toBeTruthy();
+      expect(eventSpy.calledWith(this.poem, "what is a poem without words?")).toBeTruthy();
     });
   });
 
