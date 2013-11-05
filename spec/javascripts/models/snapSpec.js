@@ -54,11 +54,11 @@ describe("Snap Model", function() {
     });
 
     it("should not save when poet_id is absent", function() {
-      var eventSpy = jasmine.createSpy('eventSpy');
+      var eventSpy = sinon.spy();
       this.snap.on("invalid", eventSpy);
       this.snap.save({"poet_id": ""});
-
-      expect(eventSpy).toHaveBeenCalled();
+      expect(eventSpy.calledOnce).toBeTruthy();
+      expect(eventSpy.calledWith(this.snap, "snap must have a poet_id")).toBeTruthy();
     });
   });
 
