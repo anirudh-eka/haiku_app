@@ -43,8 +43,8 @@ describe("CurrentUser Model", function() {
           callbacks.success();
         });
 
-        this.poemSaveStub = sinon.stub(this.poem, 'save', function(attr_change) {
-          self.poem.set(attr_change)
+        this.poemSaveStub = sinon.stub(this.poem, 'save', function(attrChange) {
+          self.poem.set(attrChange)
         });          
       });
 
@@ -68,14 +68,52 @@ describe("CurrentUser Model", function() {
   });
 
   describe('unsnap', function(){
-    it("should destroy snap object associated with poem passed in as param")
+    beforeEach(function(){
+      this.snap = { destroy: function() {}}
+      this.snapStub = sinon.stub(this.snap, 'destroy')
+      var self = this
+      this.currentUserSnappedStub = sinon.stub(this.currentUser, 'snapped', function(){
+        return self.snap
+      });
+      this.poem = new Backbone.Model({id: 1, content: "deep poem", snap_count: 1})
+    });
+
+    afterEach(function() {
+      this.currentUserSnappedStub.restore();
+      this.snapStub.restore();
+    });
+
+    it("should destroy snap object associated with poem passed in as param", function(){
+      this.currentUser.unsnap(this.poem)
+      expect(this.snapStub.calledOnce).toBeTruthy();
+    });
     
     describe("when snap destroy successful", function(){
-      it('should subtract 1 to the snap count of poem passed in')
+      beforeEach(function(){
+        var self = this
+        this.snapStub.restore();
+        this.snapStub = sinon.stub(this.snap, 'destroy', function(options) {
+          options.success();
+        })
+        this.poemSaveStub = sinon.stub(this.poem, 'save', function(attrChange){
+          self.poem.set(attrChange);
+        })
+      });
+
+      afterEach(function(){
+        this.snapStub.restore();
+      })
+
+      it('should subtract 1 to the snap count of poem passed in', function(){
+        this.currentUser.unsnap(this.poem)
+        expect(this.poem.get('snap_count')).toEqual(0)
+      });
     });
 
     describe("when snap destroy fails", function(){
-      it('should not add 1 to the snap count of poem passed in')
+      it('should not add 1 to the snap count of poem passed in', function(){
+        expect(this.poem.get('snap_count')).toEqual(1)
+      })
     });
   });
 });
