@@ -1,8 +1,25 @@
 describe("CurrentUser Model", function() {
-
   beforeEach(function() {
-    this.currentUser = new HaikuApp.Models.CurrentUser({id:1, name: 'Basho'})
-    this.currentUser.snaps = new Backbone.Collection()
+    this.currentUser = new HaikuApp.Models.CurrentUser({id:1, name: 'Basho', snaps: {id: 1, poem_id: 1, poet_id: 1} })
+    this.currentUser.snaps = new Backbone.Collection({})
+  });
+
+  describe("initialize",function(){
+    beforeEach(function() {
+      this.collection = new Backbone.Collection({})
+      this.snapsStub = sinon.stub(HaikuApp.Collections, 'Snaps')
+      this.snapsStub.returns(this.collection)
+      this.collectionStub = sinon.stub(this.collection, 'add') 
+      this.currentUser = new HaikuApp.Models.CurrentUser({id:1, name: 'Basho', snaps: {id: 1, poem_id: 1, poet_id: 1} })
+    });
+    afterEach(function() {
+      this.snapsStub.restore();
+    });
+
+    it('should add any snaps associated with the currentUser into snaps collection', function(){
+      expect(this.collectionStub.calledOnce).toBeTruthy();
+      expect(this.collectionStub.calledWith({id: 1, poem_id: 1, poet_id: 1})).toBeTruthy();
+    });
   });
 
   it("should exhibit attributes", function() {

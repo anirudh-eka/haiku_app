@@ -1,7 +1,8 @@
 HaikuApp.Models.CurrentUser = Backbone.Model.extend({
 
   initialize: function() {
-    this.snaps = new HaikuApp.Collections.Snaps(this.get('snaps'))
+    this.snaps = new HaikuApp.Collections.Snaps({user: this.user})
+    this.snaps.add(this.get('snaps'))
   },
 
   snapped: function(poemId) {
