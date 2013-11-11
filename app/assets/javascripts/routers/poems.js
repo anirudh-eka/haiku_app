@@ -16,11 +16,10 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
   index: function() {
     var leftBarView
     if (this.user) {
-      leftBarView = new HaikuApp.Views.PoemNew( { collection: this.collection } )
+      leftBarView = new HaikuApp.Views.PoemNew( { el:'#left-bar', collection: this.collection } )
     } else {
-      leftBarView = new HaikuApp.Views.SignIn()
+      leftBarView = new HaikuApp.Views.SignIn( {el:'#left-bar'} )
     }
-    $('#left-bar').html(leftBarView.$el)
 
     var view = new HaikuApp.Views.PoemIndex({ collection: this.collection})
     $('#right-bar').html(view.$el);
