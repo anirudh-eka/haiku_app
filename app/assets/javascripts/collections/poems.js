@@ -7,7 +7,6 @@ HaikuApp.Collections.Poems = Backbone.Collection.extend({
   },
 
   parse: function(res) {
-    console.log(res)
     return res.response
   },
 
