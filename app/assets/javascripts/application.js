@@ -26,4 +26,6 @@
 //= require sinon
 
 
-$(document).foundation();
+$(function() {
+  $(document).foundation();
+});
