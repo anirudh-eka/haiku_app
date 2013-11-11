@@ -36,6 +36,13 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'pry'
+  gem 'jasmine-core', github: 'pivotal/jasmine'
+  gem 'jasmine', github: 'pivotal/jasmine-gem'
+  gem 'sinon-rails'
+  gem 'jasmine-sinon-rails'
+  gem 'jasmine-jquery-rails'
+  gem "rosie" 
+  gem 'dotenv-rails'
 end
 
 group :test do
@@ -51,7 +58,6 @@ gem 'compass-rails' # you need this or you get an err
 gem 'zurb-foundation', '~> 4.0.0'
 gem 'omniauth-twitter'
 gem 'twitter'
-gem 'dotenv-rails', :groups => [:development, :test]
 gem 'backbone-on-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

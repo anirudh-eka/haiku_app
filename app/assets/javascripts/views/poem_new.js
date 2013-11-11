@@ -11,9 +11,13 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     this.render();
     this.maxContentCount = 140
     this.maxTitleCount = 40
-    this.setupMessager() 
+    this.setupMessager()
     this.titleCounter = new HaikuApp.Views.Counter({el: '#title-counter', maxCount: this.maxTitleCount, recording: '#title'})
     this.contentCounter = new HaikuApp.Views.Counter({el: '#content-counter', maxCount: this.maxContentCount, recording: '#content'})
+
+    this.listenTo(this.collection, 'invalid', function(model, error){
+      this.messager.renderMsg(error, 'error')
+    });
 
     var self = this
     this.listenTo(HaikuApp.navbar, 'signout', function(){
