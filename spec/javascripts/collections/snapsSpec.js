@@ -1,4 +1,4 @@
-describe('Snaps spec', function(){
+describe('Snaps collection spec', function(){
   describe('initialize', function(){
     describe('when user property is specified', function(){
       it('should set user property to user passed in', function(){
