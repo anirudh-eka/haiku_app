@@ -14,14 +14,16 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
   },
 
   index: function() {
+    var leftBarView
     if (this.user) {
-      new HaikuApp.Views.PoemNew( { collection: this.collection } )
+      leftBarView = new HaikuApp.Views.PoemNew( { collection: this.collection } )
     } else {
-      new HaikuApp.Views.SignIn()
+      leftBarView = new HaikuApp.Views.SignIn()
     }
-    // var status = new HaikuApp.Views.PoemCreationStatus( { collection: HaikuApp.Collections.Poems } )
+    $('#left-bar').html(leftBarView.$el)
+
     var view = new HaikuApp.Views.PoemIndex({ collection: this.collection})
-    $('#poem-list').html(view.$el);
+    $('#right-bar').html(view.$el);
   },
 
   about: function() {

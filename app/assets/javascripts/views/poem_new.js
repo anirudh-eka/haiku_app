@@ -1,5 +1,5 @@
 HaikuApp.Views.PoemNew = Backbone.View.extend({
-  el: '#new-poem-container',
+  // el: '#new-poem-container',
 
   events: {
     "submit #new-poem" : "submit",

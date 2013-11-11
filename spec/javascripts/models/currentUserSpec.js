@@ -15,6 +15,10 @@ describe("CurrentUser Model", function() {
     afterEach(function() {
       this.snapsStub.restore();
     });
+    
+    it('should be passed the currentUser as the user property', function(){
+      expect(this.snapsStub.calledWith({user: this.currentUser})).toBeTruthy();
+    });
 
     it('should add any snaps associated with the currentUser into snaps collection', function(){
       expect(this.collectionStub.calledOnce).toBeTruthy();
