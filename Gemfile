@@ -40,6 +40,7 @@ group :development, :test do
   gem 'jasmine', github: 'pivotal/jasmine-gem'
   gem 'sinon-rails'
   gem 'jasmine-sinon-rails'
+  gem 'jasmine-jquery-rails'
   gem "rosie" 
   gem 'dotenv-rails'
 end
