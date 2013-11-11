@@ -7,7 +7,7 @@ HaikuApp::Application.routes.draw do
   
   resources :poems, except: :new
  
-  root 'welcome#index' 
+  root 'welcome#landing' 
   get "/auth/:provider/callback" => "sessions#create"
   get "/signout" => "sessions#destroy", :as => :signout
 
