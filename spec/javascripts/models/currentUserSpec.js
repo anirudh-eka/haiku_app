@@ -138,4 +138,8 @@ describe("CurrentUser Model", function() {
       })
     });
   });
+
+  describe("poems", function(){
+    it('should return all the poems by a user')
+  });
 });

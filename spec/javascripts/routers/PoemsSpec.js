@@ -18,6 +18,7 @@ describe("HaikuAppRouter poems", function() {
     this.signInStub.restore();
     this.poemNewStub.restore();
     this.poemIndexStub.restore();
+    this.router.navigate("");
   });
 
   describe('initialize',function(){
@@ -62,7 +63,7 @@ describe("HaikuAppRouter poems", function() {
 
       it('creates a new poem new view with collection', function(){
         expect(this.poemNewStub.calledOnce).toBeTruthy();
-        expect(this.poemNewStub.calledWithExactly({ collection: this.poems })).toBeTruthy();
+         expect(this.poemNewStub.calledWith({ el:'#left-bar', collection: this.poems })).toBeTruthy();
       });
 
       it('does not create new sign in view', function(){
@@ -105,6 +106,28 @@ describe("HaikuAppRouter poems", function() {
 
     it("makes about view", function(){
       expect(this.aboutStub.calledOnce).toBeTruthy();
+    });
+  });
+
+  describe('myPoetry', function(){
+    beforeEach(function(){
+      this.currentUserPoemsStub = sinon.stub(this.user, 'poems')
+      this.router.bind("route:myPoetry", this.routeSpy);
+      this.router.navigate("elsewhere");
+      this.router.navigate("myPoetry", true);
+    });
+
+    afterEach(function(){
+      this.currentUserPoemsStub.restore();
+    })
+
+    it("fires the myPoetry route with a myPoetry hash", function() {
+      expect(this.routeSpy.calledOnce).toBeTruthy();
+      expect(this.routeSpy.calledWithExactly()).toBeTruthy();  
+    });
+
+    it("makes myPoetry view", function(){
+      expect(this.poemIndexStub.calledOnce).toBeTruthy();
     });
   });
 });

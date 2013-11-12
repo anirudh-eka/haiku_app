@@ -10,22 +10,43 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
 
   routes: {
     "" :"index",
-    "about":"about"
+    "about":"about",
+    "myPoetry":"myPoetry"
   },
 
   index: function() {
-    var leftBarView
-    if (this.user) {
-      leftBarView = new HaikuApp.Views.PoemNew( { el:'#left-bar', collection: this.collection } )
-    } else {
-      leftBarView = new HaikuApp.Views.SignIn( {el:'#left-bar'} )
-    }
-
-    var view = new HaikuApp.Views.PoemIndex({ collection: this.collection})
-    $('#right-bar').html(view.$el);
+    this.renderPoemNewOn('#left-bar');
+    this.rightBarView = new HaikuApp.Views.PoemIndex({ collection: this.collection})
+    $('#right-bar').html(this.rightBarView.$el);
   },
 
   about: function() {
+    console.log('about')
     new HaikuApp.Views.About()
+  },
+
+  myPoetry: function() {
+    this.renderPoemNewOn('#left-bar');
+
+    if (this.rightBarView) {
+      this.rightBarView.remove()
+    }
+    var filtered = this.collection.filter(function(model){
+      return model.author().name === HaikuApp.currentUser.get('name')
+    });
+
+    var currentUsersPoems = new HaikuApp.Collections.Poems(filtered);
+
+    this.rightBarView = new HaikuApp.Views.PoemIndex({ collection: currentUsersPoems });
+    $('#right-bar').html(this.rightBarView.$el);
+    
+  },
+
+  renderPoemNewOn: function(tag) {    
+    if (this.user) {
+      new HaikuApp.Views.PoemNew( { el:tag, collection: this.collection } )
+    } else {
+      new HaikuApp.Views.SignIn( {el:tag} )
+    }
   }
 }); 
