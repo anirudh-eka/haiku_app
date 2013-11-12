@@ -31,10 +31,10 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
     if (this.rightBarView) {
       this.rightBarView.remove()
     }
-    var filtered = this.collection.filter(function(model){
-      return model.author().name === HaikuApp.currentUser.get('name')
-    });
-
+    var filtered = []
+    if (this.user) {
+      filtered = this.user.poems()
+    }
     var currentUsersPoems = new HaikuApp.Collections.Poems(filtered);
 
     this.rightBarView = new HaikuApp.Views.PoemIndex({ collection: currentUsersPoems });

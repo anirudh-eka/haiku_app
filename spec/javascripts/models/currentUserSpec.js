@@ -140,6 +140,14 @@ describe("CurrentUser Model", function() {
   });
 
   describe("poems", function(){
-    it('should return all the poems by a user')
+    beforeEach(function(){
+      this.poemArray = [{id: 1, content: "a poem without an author"},{id: 2, content: "a poem with an author", poet: {id: 1, name: 'Basho'}}]
+      HaikuApp.poems = new HaikuApp.Collections.Poems(this.poemArray)
+    });
+
+    it('should return all the poems in HaikuApp.poems by a user', function(){
+      expect(this.currentUser.poems().length).toEqual(1)
+      expect(this.currentUser.poems()[0].author().name).toEqual("Basho")
+    });
   });
 });
