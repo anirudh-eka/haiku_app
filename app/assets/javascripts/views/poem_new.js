@@ -1,5 +1,5 @@
 HaikuApp.Views.PoemNew = Backbone.View.extend({
-  // el: '#new-poem-container',
+  id: 'new-poem-container',
 
   events: {
     "submit #new-poem" : "submit",
@@ -37,6 +37,7 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
   },
   
   countTitle: function(e) {
+    console.log('')
     this.updateSubmit(this.titleCounter.currentCount(), this.maxTitleCount)
     this.titleCounter.render()
   },

@@ -27,6 +27,14 @@ HaikuApp.Models.CurrentUser = Backbone.Model.extend({
         poem.save({snap_count: poem.get('snap_count') - 1}, {wait: true})
       }
     })
+  },
+
+  poems: function() {
+    var self = this
+    var filtered = HaikuApp.poems.filter(function(model){
+      return model.author().name === self.get('name')
+    });
+    return filtered
   }
 
 });

@@ -148,7 +148,8 @@ textarea {
 
 .author-box {
   display: block;
-  float: right;
+  /*float: right;*/
+  margin-top: 2em;
   padding-bottom: 0em;
 }
 

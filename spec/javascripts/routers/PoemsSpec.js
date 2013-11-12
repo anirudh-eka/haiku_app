@@ -1,7 +1,7 @@
 describe("HaikuAppRouter poems", function() {
   beforeEach(function() {
     this.poems = new Backbone.Collection({})
-    this.currentUser = new Backbone.Model({id: 1, name: "Basho"})
+    this.currentUser = new Backbone.Model({id: 1, name: "Basho", poems: true})
     this.signInStub = sinon.stub(HaikuApp.Views, "SignIn")
     this.poemNewStub = sinon.stub(HaikuApp.Views, "PoemNew")
     this.poemIndexStub = sinon.stub(HaikuApp.Views, "PoemIndex")
@@ -18,6 +18,7 @@ describe("HaikuAppRouter poems", function() {
     this.signInStub.restore();
     this.poemNewStub.restore();
     this.poemIndexStub.restore();
+    this.router.navigate("");
   });
 
   describe('initialize',function(){
@@ -41,8 +42,13 @@ describe("HaikuAppRouter poems", function() {
 
   describe('index', function(){
     beforeEach(function(){
+      this.renderPoemNewOnStub = sinon.stub(this.router, "renderPoemNewOn")
       this.router.bind("route:index", this.routeSpy);
       this.router.navigate("", true);
+    })
+
+    afterEach(function(){
+      this.renderPoemNewOnStub.restore();
     })
 
     it("fires the index route with a blank hash", function() {
@@ -55,14 +61,22 @@ describe("HaikuAppRouter poems", function() {
       expect(this.poemIndexStub.calledWithExactly({ collection: this.poems })).toBeTruthy();
     });
 
+    it("renders left-bar with new poem/sign in", function(){
+      expect(this.renderPoemNewOnStub.calledOnce).toBeTruthy();
+      expect(this.renderPoemNewOnStub.calledWithExactly('#left-bar')).toBeTruthy();
+    });
+  });
+
+  describe('renderPoemNewOn', function(){
     describe('when there is a user for the router', function(){
       beforeEach(function(){
         this.router.user = true
+        this.router.renderPoemNewOn('#left-bar')
       });
 
       it('creates a new poem new view with collection', function(){
         expect(this.poemNewStub.calledOnce).toBeTruthy();
-        expect(this.poemNewStub.calledWithExactly({ collection: this.poems })).toBeTruthy();
+        expect(this.poemNewStub.calledWith({ el:'#left-bar', collection: this.poems })).toBeTruthy();
       });
 
       it('does not create new sign in view', function(){
@@ -72,16 +86,17 @@ describe("HaikuAppRouter poems", function() {
 
     describe('when there is no user for the router', function(){
       beforeEach(function(){
-        this.router.navigate("elsewhere");
         this.router.user = false
-        this.router.navigate("", true);
+        this.router.renderPoemNewOn('#left-bar')
       });
 
       it('creates a new sign in view', function(){
         expect(this.signInStub.calledOnce).toBeTruthy();
       });
 
-      it('does not create new poem new view');
+      it('does not create new poem new view', function(){
+        expect(this.poemNewStub.calledOnce).toBeFalsy();
+      });
     });
   });
 
@@ -106,5 +121,48 @@ describe("HaikuAppRouter poems", function() {
     it("makes about view", function(){
       expect(this.aboutStub.calledOnce).toBeTruthy();
     });
+  });
+
+  describe('myPoetry', function(){
+    beforeEach(function(){
+      this.router.user = new HaikuApp.Models.CurrentUser({id: 1, name: "Basho"})
+      this.currentUserPoemsStub = sinon.stub(this.router.user, 'poems', function(){
+        return 'collection'
+      });
+      this.poemsCollectionStub = sinon.stub(HaikuApp.Collections, "Poems", function(){
+        return 'filtered collection'
+      })
+      this.renderPoemNewOnStub = sinon.stub(this.router, "renderPoemNewOn")
+      this.router.bind("route:myPoetry", this.routeSpy);
+      this.router.navigate("elsewhere");
+      this.router.navigate("myPoetry", true);
+    });
+
+    afterEach(function(){
+      this.currentUserPoemsStub.restore();
+      this.poemsCollectionStub.restore();
+      this.renderPoemNewOnStub.restore();
+    })
+
+    it("fires the myPoetry route with a myPoetry hash", function() {
+      expect(this.routeSpy.calledOnce).toBeTruthy();
+      expect(this.routeSpy.calledWithExactly()).toBeTruthy();  
+    });
+
+    it("makes new poems collection with current users poems", function(){
+      expect(this.poemsCollectionStub.calledOnce).toBeTruthy();
+      expect(this.poemsCollectionStub.calledWithExactly('collection')).toBeTruthy();
+    });
+
+    it("makes poem index view with current users poem collection", function(){
+      expect(this.poemIndexStub.calledOnce).toBeTruthy();
+      expect(this.poemIndexStub.calledWithExactly('filtered collection'))
+    });
+
+    it("renders left-bar with new poem/sign in", function(){
+      expect(this.renderPoemNewOnStub.calledOnce).toBeTruthy();
+      expect(this.renderPoemNewOnStub.calledWithExactly('#left-bar')).toBeTruthy();
+    });
+
   });
 });

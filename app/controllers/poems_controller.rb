@@ -14,7 +14,7 @@ class PoemsController < ApplicationController
     if @poem.save
       #TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(@poem.content) 
     end
-    respond_with(@poem, include: { poet: { only: [:id, :name] } })
+    respond_with(@poem, include: { poet: { only: [:id, :name, :prof_image_url] } })
   end
 
   def update
