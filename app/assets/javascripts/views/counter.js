@@ -7,6 +7,8 @@ HaikuApp.Views.Counter = Backbone.View.extend({
 
   render: function() {
     if (this.countRemaining() >= 0) {
+      console.log('changing')
+      console.log($(this.recording).val())
       this.$el.text(this.countRemaining()).css('color', 'black') 
     } else {
       this.$el.text(this.countRemaining()).css('color', 'red') 
