@@ -1,5 +1,5 @@
 HaikuApp.Views.PoemNew = Backbone.View.extend({
-  id: 'new-poem-container',
+  // id: 'new-poem-container',
 
   events: {
     "submit #new-poem" : "submit",
@@ -12,8 +12,8 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     this.maxContentCount = 140
     this.maxTitleCount = 40
     this.setupMessager()
-    this.titleCounter = new HaikuApp.Views.Counter({el: '#title-counter', maxCount: this.maxTitleCount, recording: '#title'})
     this.contentCounter = new HaikuApp.Views.Counter({el: '#content-counter', maxCount: this.maxContentCount, recording: '#content'})
+    this.titleCounter = new HaikuApp.Views.Counter({el: '#title-counter', maxCount: this.maxTitleCount, recording: '#title'})
 
     this.listenTo(this.collection, 'invalid', function(model, error){
       this.messager.renderMsg(error, 'error')
@@ -37,7 +37,6 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
   },
   
   countTitle: function(e) {
-    console.log('')
     this.updateSubmit(this.titleCounter.currentCount(), this.maxTitleCount)
     this.titleCounter.render()
   },

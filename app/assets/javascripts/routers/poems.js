@@ -35,7 +35,7 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
     if (this.user) {
       filtered = this.user.poems()
     }
-    var currentUsersPoems = new HaikuApp.Collections.Poems(filtered);
+    this.currentUsersPoems = new HaikuApp.Collections.Poems(filtered);
 
     this.rightBarView = new HaikuApp.Views.PoemIndex({ collection: currentUsersPoems });
     $('#right-bar').html(this.rightBarView.$el);

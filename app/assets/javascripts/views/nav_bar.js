@@ -3,7 +3,7 @@ HaikuApp.Views.NavBar = Backbone.View.extend({
   events: {
     'click #signout' : 'signout',
     'click #my-poetry' : 'myPoetry',
-    'click #title' : 'home',
+    'click #logo' : 'home',
     'click #all-poetry' : 'home'
   },
 
