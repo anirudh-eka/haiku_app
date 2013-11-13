@@ -12,7 +12,6 @@ HaikuApp.Views.NavBar = Backbone.View.extend({
     var url = $('#signout').attr('href')
     var self = this
     $.get( url, function() {
-      // self.changetoSignin()
       self.changeLink({
         oldId: 'signout',
         newId: 'signin',
@@ -24,15 +23,7 @@ HaikuApp.Views.NavBar = Backbone.View.extend({
     })
    },
 
-   changetoSignin: function() {
-    var link = $('#signout')
-    link.text('Sign In with Twitter')
-    link.attr('href', '/auth/twitter')
-    link.attr('id', 'signin')
-   },
-
    myPoetry: function(e) {
-    console.log('my poetry')
     e.preventDefault();
     HaikuApp.router.navigate('myPoetry', {trigger: true})
     this.changeLink({

@@ -1,4 +1,5 @@
 class PoemsController < ApplicationController
+  include PoemsHelper
   skip_before_action :require_login, only: [:index]
   respond_to :json
 
@@ -19,8 +20,7 @@ class PoemsController < ApplicationController
 
   def update
     @poem = Poem.find(params[:id])
-    
-    if current_user == @poem.poet
+    if current_user == @poem.poet || attribute_updated_is_snap_count
       @poem.update(poem_params)
       respond_with(@poem, include: { poet: { only: [:id, :name] } })
     else
