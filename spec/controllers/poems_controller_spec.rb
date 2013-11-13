@@ -49,7 +49,7 @@ describe PoemsController do
 
         it 'returns the created poem object' do
           correct_params
-          poem = Poem.first.to_json(include: { poet: { only: [:id, :name] } })
+          poem = Poem.first.to_json(include: { poet: { only: [:id, :name, :prof_image_url] } })
           expect(response).to be_success
           expect(json).to eq(JSON.parse(poem))
         end
@@ -81,6 +81,13 @@ describe PoemsController do
       new_attributes[:content] = "something else"
       new_attributes
     end
+
+    let(:snap_count_changed) do
+      new_attributes = FactoryGirl.attributes_for(:poem)
+      new_attributes[:snap_count] += 1
+      new_attributes
+    end
+
     let(:invalid_attributes) do
       invalid_attributes = FactoryGirl.attributes_for(:poem)
       invalid_attributes[:content] = ""
@@ -120,10 +127,18 @@ describe PoemsController do
       end
 
       context 'when user is not the author' do
-        before { correct_params }
+        before {correct_params}
         it_behaves_like 'failed poem update' do
           let(:new_attributes) { new_poem_attributes }
           let(:model) { poem }          
+        end
+
+        context 'when only snap count is changed' do
+          before{ put :update, poem: snap_count_changed, id: poem, :format => :json }
+          it_behaves_like 'successful poem update' do
+            let(:new_attributes) { snap_count_changed }
+            let(:model) { poem }  
+          end
         end
       end
     end
