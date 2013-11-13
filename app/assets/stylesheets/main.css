@@ -80,7 +80,7 @@ textarea {
   float: right;
 }
 
-.button-custom, .button-custom-good, .button-custom-bad {
+.button-custom, .button-custom-good, .button-custom-bad, .button-custom-twitter {
   border: 1px solid black;
   cursor: pointer;
   color: black;
@@ -118,6 +118,26 @@ textarea {
   background-color: #C0392B;
 }
 
+.button-custom-twitter {
+  display: table;
+  margin: 2em auto;
+  background-color: #55ACEE;
+}
+.button-custom-twitter img {
+  width: 3em;
+  padding: .4em;
+}
+
+.button-custom-twitter span {
+  color: #f5f8fa;
+  margin-left: .7em;
+  margin-right: .3em; 
+  vertical-align: 80%;
+}
+
+.button-custom-twitter:hover {
+  background-color: #5C8DB3;
+}
 /*Poem Index*/
 
 #poem-list {

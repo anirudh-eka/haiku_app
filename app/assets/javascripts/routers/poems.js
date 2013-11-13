@@ -46,6 +46,7 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
     if (this.user) {
       new HaikuApp.Views.PoemNew( { el:tag, collection: this.collection } )
     } else {
+      console.log('sign in!')
       new HaikuApp.Views.SignIn( {el:tag} )
     }
   }
