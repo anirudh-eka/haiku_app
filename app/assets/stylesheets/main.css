@@ -166,6 +166,9 @@ textarea {
   font-family: Lato;
 }
 
+.poem .content {
+  word-wrap: break-word;
+}
 .author-box {
   display: block;
   /*float: right;*/
