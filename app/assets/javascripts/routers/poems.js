@@ -4,7 +4,6 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
     this.leftBarView, this.rightBarView
 
     this.listenTo(HaikuApp.navbar, 'signout', function(){
-      this.user = HaikuApp.currentUser
       this.index();
     });
   },

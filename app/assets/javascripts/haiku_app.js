@@ -15,7 +15,7 @@ window.HaikuApp = {
 
 
     this.navbar = new HaikuApp.Views.NavBar({el: '.top-bar'})
-    this.router = new HaikuApp.Routers.Poems({ collection: this.poems, user: this.currentUser });
+    this.router = new HaikuApp.Routers.Poems({ collection: this.poems });
     
     
     if (!Backbone.history.started) {
