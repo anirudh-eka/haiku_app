@@ -2,7 +2,7 @@ describe("HaikuAppRouter poems", function() {
   beforeEach(function() {
     this.poems = new Backbone.Collection({})
     HaikuApp.navbar = new Backbone.View({})  
-    HaikuApp.currentUser = new Backbone.Model({id: 1, name: "Basho", poems: true})
+    HaikuApp.currentUser = {id: 1, name: "Basho", poems: function(){true}}
     this.signInStub = sinon.stub(HaikuApp.Views, "SignIn")
     this.poemNewStub = sinon.stub(HaikuApp.Views, "PoemNew");
 
@@ -99,8 +99,7 @@ describe("HaikuAppRouter poems", function() {
 
   describe('myPoetry', function(){
     beforeEach(function(){
-      this.router.user = new HaikuApp.Models.CurrentUser({id: 1, name: "Basho"})
-      this.currentUserPoemsStub = sinon.stub(this.router.user, 'poems', function(){
+      this.currentUserPoemsStub = sinon.stub(HaikuApp.currentUser, 'poems', function(){
         return 'collection'
       });
       this.poemsCollectionStub = sinon.stub(HaikuApp.Collections, "Poems", function(){
@@ -206,7 +205,7 @@ describe("HaikuAppRouter poems", function() {
 
         it('creates a new PoemNew view with collection', function(){
           expect(this.poemNewStub.calledOnce).toBeTruthy();
-          expect(this.poemNewStub.calledWith({ collection: this.poems, user: this.currentUser })).toBeTruthy();
+          expect(this.poemNewStub.calledWith({ collection: this.poems })).toBeTruthy();
         });
 
         it('calls setup on the new LeftBarView', function(){

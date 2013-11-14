@@ -30,8 +30,8 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
 
     if (this.rightBarView) { this.rightBarView.remove() }
     var filtered = []
-    if (this.user) {
-      filtered = this.user.poems()
+    if (HaikuApp.currentUser) {
+      filtered = HaikuApp.currentUser.poems()
     }
     this.currentUsersPoems = new HaikuApp.Collections.Poems(filtered);
 
@@ -44,7 +44,7 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
     var tag = ('#left-bar') 
     if (HaikuApp.currentUser && !(this.leftBarView instanceof HaikuApp.Views.PoemNew)) {
       if (this.leftBarView) {this.leftBarView.remove()}
-      this.leftBarView = new HaikuApp.Views.PoemNew( { collection: this.collection, user: this.user } )
+      this.leftBarView = new HaikuApp.Views.PoemNew( { collection: this.collection } )
       $('#left-bar').html(this.leftBarView.$el);
       this.leftBarView.setup();
     } else if (!HaikuApp.currentUser && !(this.leftBarView instanceof HaikuApp.Views.SignIn)) {

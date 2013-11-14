@@ -32,7 +32,7 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
 
   setupMessager: function() {
     this.messager = new HaikuApp.Views.StatusMessager({el: '#poem-create-messager'})
-    var welcomeMsg = 'Welcome ' + this.user.get('name') + '! Please share a haiku or short poem with us'
+    var welcomeMsg = 'Welcome ' + HaikuApp.currentUser.get('name') + '! Please share a haiku or short poem with us'
     this.messager.renderMsg(welcomeMsg, 'success')
   },
   
