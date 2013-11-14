@@ -1,11 +1,13 @@
 describe("HaikuAppRouter poems", function() {
   beforeEach(function() {
     this.poems = new Backbone.Collection({})
-    this.currentUser = new Backbone.Model({id: 1, name: "Basho", poems: true})
+    HaikuApp.navbar = new Backbone.View({})  
+    HaikuApp.currentUser = {id: 1, name: "Basho", poems: function(){true}}
     this.signInStub = sinon.stub(HaikuApp.Views, "SignIn")
-    this.poemNewStub = sinon.stub(HaikuApp.Views, "PoemNew")
+    this.poemNewStub = sinon.stub(HaikuApp.Views, "PoemNew");
+
     this.poemIndexStub = sinon.stub(HaikuApp.Views, "PoemIndex")
-    this.router = new HaikuApp.Routers.Poems({ collection: this.poems, user: this.currentUser });
+    this.router = new HaikuApp.Routers.Poems({ collection: this.poems });
     this.routeSpy = sinon.spy();
 
     try {
@@ -25,30 +27,17 @@ describe("HaikuAppRouter poems", function() {
     it("should set collection property to collection passed in", function(){
       expect(this.router.collection).toEqual(this.poems)
     });
-    describe("when user is passed at router initialization", function(){
-      it("should set user property to user passed in", function(){
-        expect(this.router.user).toEqual(this.currentUser)
-      });
-    });
-    describe("when user is not passed at router initialization", function(){
-      beforeEach(function(){
-        this.router = new HaikuApp.Routers.Poems({ collection: this.poems});
-      })
-      it("should set user property to null", function(){
-        expect(this.router.user).toEqual(null)
-      });
-    });
   });
 
   describe('index', function(){
     beforeEach(function(){
-      this.renderPoemNewOnStub = sinon.stub(this.router, "renderPoemNewOn")
+      this.renderLeftBarStub = sinon.stub(this.router, "renderLeftBar")
       this.router.bind("route:index", this.routeSpy);
       this.router.navigate("", true);
     })
 
     afterEach(function(){
-      this.renderPoemNewOnStub.restore();
+      this.renderLeftBarStub.restore();
     })
 
     it("fires the index route with a blank hash", function() {
@@ -56,49 +45,34 @@ describe("HaikuAppRouter poems", function() {
       expect(this.routeSpy.calledWithExactly()).toBeTruthy();  
     });
 
+    describe("when a right bar view already exists", function(){
+      beforeEach(function(){
+        this.router.rightBarView = new Backbone.View()
+        this.rightBarViewSpy = sinon.spy(this.router.rightBarView,'remove')
+        this.router.navigate("elsewhere");
+        this.router.navigate("", true);
+      });
+
+      afterEach(function(){
+        this.rightBarViewSpy.restore();
+      });
+
+      it("removes previous right bar view", function(){
+        expect(this.rightBarViewSpy.calledOnce).toBeTruthy();
+      });
+    });
+
+
     it ("makes new poem index view with collection", function(){
       expect(this.poemIndexStub.calledOnce).toBeTruthy();
       expect(this.poemIndexStub.calledWithExactly({ collection: this.poems })).toBeTruthy();
     });
 
     it("renders left-bar with new poem/sign in", function(){
-      expect(this.renderPoemNewOnStub.calledOnce).toBeTruthy();
-      expect(this.renderPoemNewOnStub.calledWithExactly('#left-bar')).toBeTruthy();
+      expect(this.renderLeftBarStub.calledOnce).toBeTruthy();
     });
   });
 
-  describe('renderPoemNewOn', function(){
-    describe('when there is a user for the router', function(){
-      beforeEach(function(){
-        this.router.user = true
-        this.router.renderPoemNewOn('#left-bar')
-      });
-
-      it('creates a new poem new view with collection', function(){
-        expect(this.poemNewStub.calledOnce).toBeTruthy();
-        expect(this.poemNewStub.calledWith({ el:'#left-bar', collection: this.poems })).toBeTruthy();
-      });
-
-      it('does not create new sign in view', function(){
-        expect(this.signInStub.calledOnce).toBeFalsy();
-      });
-    })
-
-    describe('when there is no user for the router', function(){
-      beforeEach(function(){
-        this.router.user = false
-        this.router.renderPoemNewOn('#left-bar')
-      });
-
-      it('creates a new sign in view', function(){
-        expect(this.signInStub.calledOnce).toBeTruthy();
-      });
-
-      it('does not create new poem new view', function(){
-        expect(this.poemNewStub.calledOnce).toBeFalsy();
-      });
-    });
-  });
 
   describe('about', function(){
     beforeEach(function(){
@@ -125,14 +99,13 @@ describe("HaikuAppRouter poems", function() {
 
   describe('myPoetry', function(){
     beforeEach(function(){
-      this.router.user = new HaikuApp.Models.CurrentUser({id: 1, name: "Basho"})
-      this.currentUserPoemsStub = sinon.stub(this.router.user, 'poems', function(){
+      this.currentUserPoemsStub = sinon.stub(HaikuApp.currentUser, 'poems', function(){
         return 'collection'
       });
       this.poemsCollectionStub = sinon.stub(HaikuApp.Collections, "Poems", function(){
         return 'filtered collection'
       })
-      this.renderPoemNewOnStub = sinon.stub(this.router, "renderPoemNewOn")
+      this.renderLeftBarStub = sinon.stub(this.router, "renderLeftBar")
       this.router.bind("route:myPoetry", this.routeSpy);
       this.router.navigate("elsewhere");
       this.router.navigate("myPoetry", true);
@@ -141,12 +114,29 @@ describe("HaikuAppRouter poems", function() {
     afterEach(function(){
       this.currentUserPoemsStub.restore();
       this.poemsCollectionStub.restore();
-      this.renderPoemNewOnStub.restore();
+      this.renderLeftBarStub.restore();
     })
 
     it("fires the myPoetry route with a myPoetry hash", function() {
       expect(this.routeSpy.calledOnce).toBeTruthy();
       expect(this.routeSpy.calledWithExactly()).toBeTruthy();  
+    });
+    
+    describe("when a right bar view already exists", function(){
+      beforeEach(function(){
+        this.router.rightBarView = new Backbone.View()
+        this.rightBarViewSpy = sinon.spy(this.router.rightBarView,'remove')
+        this.router.navigate("elsewhere");
+        this.router.navigate("myPoetry", true);
+      });
+
+      afterEach(function(){
+        this.rightBarViewSpy.restore();
+      });
+
+      it("removes previous right bar view", function(){
+        expect(this.rightBarViewSpy.calledOnce).toBeTruthy();
+      });
     });
 
     it("makes new poems collection with current users poems", function(){
@@ -160,9 +150,127 @@ describe("HaikuAppRouter poems", function() {
     });
 
     it("renders left-bar with new poem/sign in", function(){
-      expect(this.renderPoemNewOnStub.calledOnce).toBeTruthy();
-      expect(this.renderPoemNewOnStub.calledWithExactly('#left-bar')).toBeTruthy();
+      expect(this.renderLeftBarStub.calledOnce).toBeTruthy();
     });
 
+  });
+
+  describe('renderLeftBar', function(){
+    beforeEach(function(){
+      this.router.leftBarView = {setup: function(){return true}, remove: function(){return true} }
+      this.leftBarViewSetupSpy = sinon.spy(this.router.leftBarView, 'setup')
+      this.leftBarViewRemoveSpy = sinon.spy(this.router.leftBarView, 'remove')
+    })
+    
+    afterEach(function(){
+      this.leftBarViewSetupSpy.restore();
+      this.leftBarViewRemoveSpy.restore();
+    });
+    
+    describe('when there is a user for the router', function(){
+      beforeEach(function(){
+        this.poemNewStub.returns(this.router.leftBarView);
+      });
+
+      describe('and when the current leftBarView is a PoemNew view', function(){
+        beforeEach(function(){
+          this.poemNewStub.restore();
+          this.router.leftBarView = new HaikuApp.Views.PoemNew({collection: this.poems, user: this.currentUser})
+          this.router.renderLeftBar();
+        })
+
+        it('does not remove the left bar view', function(){
+          expect(this.leftBarViewRemoveSpy.calledOnce).toBeFalsy();
+        }); 
+
+        it('does not create a new PoemNew view with collection', function(){
+          expect(this.poemNewStub.calledOnce).toBeFalsy();
+        });
+
+        it('does not call setup on the LeftBarView', function(){
+          expect(this.leftBarViewSetupSpy.calledOnce).toBeFalsy();
+        });
+      });
+
+      describe('and when the current leftBarView is not a PoemNew view', function(){    
+        beforeEach(function(){
+          this.router.renderLeftBar();
+        });
+
+        describe('when a current leftBarView exists', function(){
+          it('removes the left bar view', function(){
+            expect(this.leftBarViewRemoveSpy.calledOnce).toBeTruthy();
+          }); 
+        });
+
+        it('creates a new PoemNew view with collection', function(){
+          expect(this.poemNewStub.calledOnce).toBeTruthy();
+          expect(this.poemNewStub.calledWith({ collection: this.poems })).toBeTruthy();
+        });
+
+        it('calls setup on the new LeftBarView', function(){
+          expect(this.leftBarViewSetupSpy.calledOnce).toBeTruthy();
+        });
+
+      });
+
+      it('does not create new sign in view', function(){
+        this.router.renderLeftBar()
+        expect(this.signInStub.calledOnce).toBeFalsy();
+      });
+    })
+
+    describe('when there is no user for the router', function(){
+      beforeEach(function(){
+        HaikuApp.currentUser = null
+        this.signInStub.returns(this.router.leftBarView);
+      });
+      
+      describe('and when the current leftBarView is SignIn view', function(){
+        beforeEach(function(){
+          this.signInStub.restore();
+          this.router.leftBarView = new HaikuApp.Views.SignIn()
+          this.router.renderLeftBar()
+        });
+
+        it('does not remove the left bar view', function(){
+          expect(this.leftBarViewRemoveSpy.calledOnce).toBeFalsy();
+        }); 
+
+        it('does not create a new SignIn view with collection', function(){
+          expect(this.signInStub.calledOnce).toBeFalsy();
+        });
+
+        it('does not call setup on the LeftBarView', function(){
+          expect(this.leftBarViewSetupSpy.calledOnce).toBeFalsy();
+        });
+      });
+
+      describe('and when the current leftBarView is not SignIn view', function(){
+        beforeEach(function(){
+          this.router.renderLeftBar();
+        });
+
+        describe('when a current leftBarView exists', function(){
+          it('removes the left bar view', function(){
+            expect(this.leftBarViewRemoveSpy.calledOnce).toBeTruthy();
+          }); 
+        });
+        
+        it('creates a new sign in view', function(){
+          expect(this.signInStub.calledOnce).toBeTruthy();
+          expect(this.signInStub.calledWithExactly()).toBeTruthy();
+        });
+
+        it('calls setup on the new LeftBarView', function(){
+          expect(this.leftBarViewSetupSpy.calledOnce).toBeTruthy();
+        });
+      });
+
+        it('does not create new PoemNew view', function(){
+          this.router.renderLeftBar()
+          expect(this.poemNewStub.calledOnce).toBeFalsy();
+        });
+    });
   });
 });
