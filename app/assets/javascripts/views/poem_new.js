@@ -9,7 +9,6 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
 
   initialize: function(args) {
     this.render();
-    console.log(args)
     this.user = args.user
     this.maxContentCount = 140
     this.maxTitleCount = 40
