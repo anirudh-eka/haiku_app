@@ -1,12 +1,13 @@
 describe("HaikuAppRouter poems", function() {
   beforeEach(function() {
     this.poems = new Backbone.Collection({})
-    this.currentUser = new Backbone.Model({id: 1, name: "Basho", poems: true})
+    HaikuApp.navbar = new Backbone.View({})  
+    HaikuApp.currentUser = new Backbone.Model({id: 1, name: "Basho", poems: true})
     this.signInStub = sinon.stub(HaikuApp.Views, "SignIn")
     this.poemNewStub = sinon.stub(HaikuApp.Views, "PoemNew");
 
     this.poemIndexStub = sinon.stub(HaikuApp.Views, "PoemIndex")
-    this.router = new HaikuApp.Routers.Poems({ collection: this.poems, user: this.currentUser });
+    this.router = new HaikuApp.Routers.Poems({ collection: this.poems });
     this.routeSpy = sinon.spy();
 
     try {
@@ -25,19 +26,6 @@ describe("HaikuAppRouter poems", function() {
   describe('initialize',function(){
     it("should set collection property to collection passed in", function(){
       expect(this.router.collection).toEqual(this.poems)
-    });
-    describe("when user is passed at router initialization", function(){
-      it("should set user property to user passed in", function(){
-        expect(this.router.user).toEqual(this.currentUser)
-      });
-    });
-    describe("when user is not passed at router initialization", function(){
-      beforeEach(function(){
-        this.router = new HaikuApp.Routers.Poems({ collection: this.poems});
-      })
-      it("should set user property to null", function(){
-        expect(this.router.user).toEqual(null)
-      });
     });
   });
 
@@ -185,7 +173,7 @@ describe("HaikuAppRouter poems", function() {
         this.poemNewStub.returns(this.router.leftBarView);
       });
 
-      describe('and when the currentUser leftBarView is a PoemNew view', function(){
+      describe('and when the current leftBarView is a PoemNew view', function(){
         beforeEach(function(){
           this.poemNewStub.restore();
           this.router.leftBarView = new HaikuApp.Views.PoemNew({collection: this.poems, user: this.currentUser})
@@ -235,7 +223,7 @@ describe("HaikuAppRouter poems", function() {
 
     describe('when there is no user for the router', function(){
       beforeEach(function(){
-        this.router.user = false
+        HaikuApp.currentUser = null
         this.signInStub.returns(this.router.leftBarView);
       });
       

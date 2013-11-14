@@ -1,11 +1,6 @@
 HaikuApp.Routers.Poems = Backbone.Router.extend({
   initialize: function(options) {
     this.collection = options.collection
-    if (options.user) {
-      this.user = options.user
-    } else {
-      this.user = null
-    }
     this.leftBarView, this.rightBarView
 
     this.listenTo(HaikuApp.navbar, 'signout', function(){
@@ -48,12 +43,12 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
 
   renderLeftBar: function() {
     var tag = ('#left-bar') 
-    if (this.user && !(this.leftBarView instanceof HaikuApp.Views.PoemNew)) {
+    if (HaikuApp.currentUser && !(this.leftBarView instanceof HaikuApp.Views.PoemNew)) {
       if (this.leftBarView) {this.leftBarView.remove()}
       this.leftBarView = new HaikuApp.Views.PoemNew( { collection: this.collection, user: this.user } )
       $('#left-bar').html(this.leftBarView.$el);
       this.leftBarView.setup();
-    } else if (!this.user && !(this.leftBarView instanceof HaikuApp.Views.SignIn)) {
+    } else if (!HaikuApp.currentUser && !(this.leftBarView instanceof HaikuApp.Views.SignIn)) {
       if (this.leftBarView) {this.leftBarView.remove()}
       this.leftBarView = new HaikuApp.Views.SignIn()
       $('#left-bar').html(this.leftBarView.$el);
