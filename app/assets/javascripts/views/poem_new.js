@@ -7,22 +7,22 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     "keyup #content" : "countContent"
   },
 
-  initialize: function() {
+  initialize: function(args) {
     this.render();
+    console.log(args)
+    this.user = args.user
     this.maxContentCount = 140
     this.maxTitleCount = 40
-    this.setupMessager()
-    this.contentCounter = new HaikuApp.Views.Counter({el: '#content-counter', maxCount: this.maxContentCount, recording: '#content'})
-    this.titleCounter = new HaikuApp.Views.Counter({el: '#title-counter', maxCount: this.maxTitleCount, recording: '#title'})
 
     this.listenTo(this.collection, 'invalid', function(model, error){
       this.messager.renderMsg(error, 'error')
     });
+  },
 
-    var self = this
-    this.listenTo(HaikuApp.navbar, 'signout', function(){
-      self.remove()  
-    });
+  setup: function() {
+    this.setupMessager()
+    this.contentCounter = new HaikuApp.Views.Counter({el: '#content-counter', maxCount: this.maxContentCount, recording: '#content'})
+    this.titleCounter = new HaikuApp.Views.Counter({el: '#title-counter', maxCount: this.maxTitleCount, recording: '#title'})
   },
 
   render: function() {
@@ -32,7 +32,7 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
 
   setupMessager: function() {
     this.messager = new HaikuApp.Views.StatusMessager({el: '#poem-create-messager'})
-    var welcomeMsg = 'Welcome ' + HaikuApp.currentUser.get('name') + '! Please share a haiku or short poem with us'
+    var welcomeMsg = 'Welcome ' + this.user.get('name') + '! Please share a haiku or short poem with us'
     this.messager.renderMsg(welcomeMsg, 'success')
   },
   
