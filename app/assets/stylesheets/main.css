@@ -151,6 +151,10 @@ textarea {
 
 /*poem show*/
 
+.poem:last-child {
+  border-bottom: 0px solid black;
+  border-radius: 0% 0% 0% 0%;
+}
 .poem {
   /*background-color: rgba(238, 232, 213, 0.8);*/
   /*background-color: rgba(0, 43, 54, 0.9);*/
@@ -158,6 +162,7 @@ textarea {
   text-align: center;
   /*border-bottom: 1px solid #FFBF79;*/
   border-bottom: 5px solid black;
+  border-radius: 0% 0% 15% 15%;
   padding: 1em;
 }
 
