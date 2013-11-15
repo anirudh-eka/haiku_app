@@ -2,7 +2,8 @@ html {
   /*background: url('carlton_birds.png') no-repeat center center fixed;*/
   /*background: url('birds_in_tree.jpg') no-repeat center center fixed;*/
   /*background-size: cover;*/
-  background-color: #77E4FF;
+  /*background-color: #77E4FF;*/
+  background-color: ivory; 
   /*background-color: #FFBF79;*/
   /*background-color: #BDC3C7;*/
   /*background-color: white;*/
@@ -40,9 +41,11 @@ body {
   background-color: #FFBF79;
   /*background-color: #2C3E50;*/
   /*background-color: #FFEDD5;*/
-
   overflow: hidden;
   border-bottom: 2px solid black;
+  margin-bottom: -.2em;
+  max-width: 100%;
+  box-shadow: 0em .1em 2em gray;
 }
 
 /* Poem New*/
@@ -51,14 +54,17 @@ body {
   /*position: fixed;*/
   /*background-color: #ECF0F1;*/
   /*background-color: #D8ECFF;*/
-  background-color: #FFEDD5;
+  /*background-color: #FFEDD5;*/
   /*background-color: #34495E;*/
   /*background-color: #B2F0FF;*/
-  background-color: white;
+  background-color: transparent;
   /*border-radius: 20px;*/
-  border: 5px solid black;
+  /*border: 5px solid black;*/
   padding: 20px;
+  margin-top: 3em;
   margin-bottom: 1em;
+  width: 25em;
+  position: fixed;
 }
 
 #left-bar label {
@@ -139,14 +145,20 @@ textarea {
   background-color: #5C8DB3;
 }
 /*Poem Index*/
+#right-bar {
+  margin-left: 28em;
+}
 
 #poem-list {
   /*background-color: #ECF0F1;*/
+  box-shadow: -.3em .2em 2em gray;
   background-color: #FFEDD5;
   /*background-color: rgba(240, 240, 240, 0.4);*/
   border: 5px solid black;
   padding: 0em;
   margin-bottom: 1em;
+  margin-top: -1em;
+  padding-top: 5em;
 }
 
 /*poem show*/
