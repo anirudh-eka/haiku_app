@@ -1,18 +1,15 @@
-HaikuApp.Views.PoemIndex = Backbone.View.extend({
+HaikuApp.Views.FilteredPoemIndex = Backbone.View.extend({
 
   id: 'poem-list',
 
   initialize: function(args) {
-    this.listenTo(this.collection, 'reset', this.addAll)
     this.listenTo(this.collection, 'add', this.addOne)
-    this.addAll(this.collection);
-    // this.collection.fetch({reset: true});
-  },
+    this.addAll(args.filtered);
+  }, 
 
-
-  addAll: function(modelArray) {
+  addAll: function(filtered) {
     var self = this
-    modelArray.each(function(model){
+    _.each(filtered, function(model) {
       self.addOne(model);
     });
   },
