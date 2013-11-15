@@ -29,9 +29,9 @@ HaikuApp.Models.CurrentUser = Backbone.Model.extend({
     })
   },
 
-  poems: function() {
+  poems: function(poems) {
     var self = this
-    var filtered = HaikuApp.poems.filter(function(model){
+    var filtered = poems.filter(function(model){
       return model.author().name === self.get('name')
     });
     return filtered

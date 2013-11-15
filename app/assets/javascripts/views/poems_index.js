@@ -2,7 +2,7 @@ HaikuApp.Views.PoemIndex = Backbone.View.extend({
 
   id: 'poem-list',
 
-  initialize: function() {
+  initialize: function(args) {
     this.listenTo(this.collection, 'reset', this.addAll)
     this.listenTo(this.collection, 'add', this.addOne)
     this.addAll(this.collection);
