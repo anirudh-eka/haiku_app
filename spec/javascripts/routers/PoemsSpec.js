@@ -100,11 +100,10 @@ describe("HaikuAppRouter poems", function() {
   describe('myPoetry', function(){
     beforeEach(function(){
       this.currentUserPoemsStub = sinon.stub(HaikuApp.currentUser, 'poems', function(){
-        return 'collection'
+        return 'filtered array'
       });
-      this.poemsCollectionStub = sinon.stub(HaikuApp.Collections, "Poems", function(){
-        return 'filtered collection'
-      })
+      this.myPoemsStub = sinon.stub(HaikuApp.Views,'FilteredPoemIndex')
+
       this.renderLeftBarStub = sinon.stub(this.router, "renderLeftBar")
       this.router.bind("route:myPoetry", this.routeSpy);
       this.router.navigate("elsewhere");
@@ -113,8 +112,8 @@ describe("HaikuAppRouter poems", function() {
 
     afterEach(function(){
       this.currentUserPoemsStub.restore();
-      this.poemsCollectionStub.restore();
       this.renderLeftBarStub.restore();
+      this.myPoemsStub.restore();
     })
 
     it("fires the myPoetry route with a myPoetry hash", function() {
@@ -138,21 +137,21 @@ describe("HaikuAppRouter poems", function() {
         expect(this.rightBarViewSpy.calledOnce).toBeTruthy();
       });
     });
+    describe("when there is a current user", function(){
+      it("filters all poems to get current user's poems", function(){
+        expect(this.currentUserPoemsStub.calledOnce).toBeTruthy();
+        expect(this.currentUserPoemsStub.calledWithExactly(this.poems)).toBeTruthy();
+      });    
 
-    it("makes new poems collection with current users poems", function(){
-      expect(this.poemsCollectionStub.calledOnce).toBeTruthy();
-      expect(this.poemsCollectionStub.calledWithExactly('collection')).toBeTruthy();
-    });
-
-    it("makes poem index view with current users poem collection", function(){
-      expect(this.poemIndexStub.calledOnce).toBeTruthy();
-      expect(this.poemIndexStub.calledWithExactly('filtered collection'))
+      it("makes poem index view with all poems and filtered", function(){
+        expect(this.myPoemsStub.calledOnce).toBeTruthy();
+        expect(this.myPoemsStub.calledWithExactly({collection: this.poems, filtered: 'filtered array'})).toBeTruthy();
+      });
     });
 
     it("renders left-bar with new poem/sign in", function(){
       expect(this.renderLeftBarStub.calledOnce).toBeTruthy();
     });
-
   });
 
   describe('renderLeftBar', function(){
