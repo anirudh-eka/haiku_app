@@ -2,11 +2,12 @@ html {
   /*background: url('carlton_birds.png') no-repeat center center fixed;*/
   /*background: url('birds_in_tree.jpg') no-repeat center center fixed;*/
   /*background-size: cover;*/
-  background-color: #77E4FF;
+  /*background-color: #77E4FF;*/
+  background-color: ivory; 
   /*background-color: #FFBF79;*/
   /*background-color: #BDC3C7;*/
   /*background-color: white;*/
-  border: 5px solid black;
+  /*border: 5px solid black;*/
 }
 
 body {
@@ -40,9 +41,12 @@ body {
   background-color: #FFBF79;
   /*background-color: #2C3E50;*/
   /*background-color: #FFEDD5;*/
-
   overflow: hidden;
   border-bottom: 2px solid black;
+  box-shadow: 0em .1em 2em gray;
+  margin-bottom: -.2em;
+  max-width: 100%;
+  z-index: 3;
 }
 
 /* Poem New*/
@@ -51,15 +55,19 @@ body {
   /*position: fixed;*/
   /*background-color: #ECF0F1;*/
   /*background-color: #D8ECFF;*/
-  background-color: #FFEDD5;
+  /*background-color: #FFEDD5;*/
   /*background-color: #34495E;*/
   /*background-color: #B2F0FF;*/
-  background-color: white;
+  background-color: transparent;
   /*border-radius: 20px;*/
-  border: 5px solid black;
+  /*border: 5px solid black;*/
   padding: 20px;
+  margin-top: 3em;
   margin-bottom: 1em;
+  width: 25em;
+  position: fixed;
 }
+
 
 #left-bar label {
   /*color: #dc322f;*/
@@ -139,18 +147,28 @@ textarea {
   background-color: #5C8DB3;
 }
 /*Poem Index*/
+#right-bar {
+  margin-left: 28em;
+}
 
 #poem-list {
   /*background-color: #ECF0F1;*/
+  box-shadow: -.3em .2em 2em gray;
   background-color: #FFEDD5;
   /*background-color: rgba(240, 240, 240, 0.4);*/
   border: 5px solid black;
   padding: 0em;
   margin-bottom: 1em;
+  margin-top: -1em;
+  padding-top: 5em;
 }
 
 /*poem show*/
 
+.poem:last-child {
+  border-bottom: 0px solid black;
+  border-radius: 0% 0% 0% 0%;
+}
 .poem {
   /*background-color: rgba(238, 232, 213, 0.8);*/
   /*background-color: rgba(0, 43, 54, 0.9);*/
@@ -158,6 +176,7 @@ textarea {
   text-align: center;
   /*border-bottom: 1px solid #FFBF79;*/
   border-bottom: 5px solid black;
+  border-radius: 0% 0% 15% 15%;
   padding: 1em;
 }
 
@@ -204,3 +223,33 @@ textarea {
   padding-left: 2.5em;
 }
 
+/*Responsive Design*/
+
+@media all and (max-width: 940px){
+  #left-bar {
+    /*display: none;*/
+    background-color: ivory;
+    margin-bottom: 0em;
+    bottom: 0em;
+    left: 0em;
+    z-index: 2;
+    border-top: 2px solid black;
+    box-shadow: 0em .1em 2em gray; 
+  }
+  #left-bar:first-child{ 
+    width: 100%;
+  }
+
+  #new-poem label {
+    display: none
+  }
+
+  textarea {
+    resize: none;
+    height: 4em;
+    /*width: 4em;*/
+  }
+  #right-bar {
+  margin-left: 0em;
+}
+}

@@ -22,6 +22,7 @@
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   </head>
   <body>
+    <div class="fixed">
     <nav class="top-bar"  >
       <ul class= "title-area">
         <li class="name"><h1><%= link_to "HaiCoup", root_path, :id => 'logo' %></h1></li>
@@ -40,6 +41,7 @@
         </ul>
       </section>
     </nav>
+    </div>
     <div class="row">
       <div class="large-12 columns">
         <%= yield %>
