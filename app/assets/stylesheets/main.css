@@ -67,6 +67,7 @@ body {
   position: fixed;
 }
 
+
 #left-bar label {
   /*color: #dc322f;*/
   font-size: 2em;
@@ -221,3 +222,13 @@ textarea {
   padding-left: 2.5em;
 }
 
+/*Responsive Design*/
+
+@media all and (max-width: 940px){
+  #left-bar {
+    display: none;
+  }
+  #right-bar {
+  margin-left: 0em;
+}
+}
