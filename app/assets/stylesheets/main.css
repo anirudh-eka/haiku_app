@@ -7,7 +7,7 @@ html {
   /*background-color: #FFBF79;*/
   /*background-color: #BDC3C7;*/
   /*background-color: white;*/
-  border: 5px solid black;
+  /*border: 5px solid black;*/
 }
 
 body {
@@ -43,9 +43,10 @@ body {
   /*background-color: #FFEDD5;*/
   overflow: hidden;
   border-bottom: 2px solid black;
+  box-shadow: 0em .1em 2em gray;
   margin-bottom: -.2em;
   max-width: 100%;
-  box-shadow: 0em .1em 2em gray;
+  z-index: 3;
 }
 
 /* Poem New*/
@@ -226,7 +227,27 @@ textarea {
 
 @media all and (max-width: 940px){
   #left-bar {
-    display: none;
+    /*display: none;*/
+    background-color: ivory;
+    margin-bottom: 0em;
+    bottom: 0em;
+    left: 0em;
+    z-index: 2;
+    border-top: 2px solid black;
+    box-shadow: 0em .1em 2em gray; 
+  }
+  #left-bar:first-child{ 
+    width: 100%;
+  }
+
+  #new-poem label {
+    display: none
+  }
+
+  textarea {
+    resize: none;
+    height: 4em;
+    /*width: 4em;*/
   }
   #right-bar {
   margin-left: 0em;
