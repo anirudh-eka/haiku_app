@@ -58,8 +58,8 @@ body {
 
 #left-bar {
   background-color: transparent;
-  padding: 20px;
-  margin-top: 3em;
+  padding: 10px;
+  margin-top: 2.5em;
   margin-bottom: 1em;
   width: 25em;
   position: fixed;
@@ -72,7 +72,16 @@ body {
   input, textarea {
     border: $border-thin;
   } 
-
+  label[for="tweet-check-box"] {
+      font-size: 1.2em;
+      display: inline;
+  }
+  #tweet-check-box {
+    margin-left: .7em; 
+  }
+  input[type="submit"] {
+    margin-top: .7em;
+  }
 }
 
 textarea {
