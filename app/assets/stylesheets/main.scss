@@ -1,0 +1,247 @@
+$border-color: black;
+$shadow-color: gray;
+$border-medium: 2px solid $border-color;
+$border-thin: 1px solid $border-color;
+$border-thick: 5px solid $border-color;
+$shadow-light: 0em .1em 2em $shadow-color;
+$layer-top: 3;
+$color-base: ivory;
+$color-red-custom: #E74C3C;
+$color-green-custom: #2ECC71;
+$color-title: #dc322f;
+$color-top-bar: #FFBF79;
+
+body {
+  background-color: $color-base;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+.message {
+  cursor: pointer
+}
+
+.success {
+  color: $color-green-custom;
+}
+
+.error {
+  color:  $color-red-custom;
+}
+
+/*nav bar*/
+.title-area{
+  .name {
+    h1 {
+      a {
+       color: $color-title;  
+      }
+    }
+  }
+} 
+
+
+.top-bar {
+  background-color: $color-top-bar ;
+  overflow: hidden;
+  border-bottom: $border-medium;
+  box-shadow: $shadow-light;
+  margin-bottom: -.2em;
+  max-width: 100%;
+  z-index: $layer-top;
+}
+
+/* Poem New*/
+
+#left-bar {
+  background-color: transparent;
+  padding: 20px;
+  margin-top: 3em;
+  margin-bottom: 1em;
+  width: 25em;
+  position: fixed;
+
+  label {
+    font-size: 2em;
+    font-family: Lato;
+  }
+
+  input, textarea {
+    border: $border-thin;
+  } 
+
+}
+
+textarea {
+  resize: none;
+  height: 8em;
+}
+
+#content-counter, #title-counter {
+  float: right;
+}
+
+
+.button-custom {
+  border: $border-thin;
+  cursor: pointer;
+  color: black;
+  font-size: 1em;
+  padding: 10px;
+  display: inline-block;
+}
+
+.button-custom:hover {
+  background-color: #16A085;
+}
+
+
+.button-custom:disabled {
+  background-color: #BDC3C7
+}
+
+.button-custom {
+  background-color: #1ABC9C;
+}
+
+.button-custom-good {
+  @extend .button-custom;
+  background-color: $color-green-custom;
+}
+
+.button-custom-good:hover {
+  background-color: #27AE60;
+}
+
+.button-custom-bad {
+  @extend .button-custom;
+  background-color:  $color-red-custom;
+}
+
+.button-custom-bad:hover {
+  background-color: #C0392B;
+}
+
+.button-custom-twitter {
+  @extend .button-custom;
+  display: table;
+  margin: 2em auto;
+  background-color: #55ACEE;
+  img {
+    width: 3em;
+    padding: .4em;
+  }
+  span {
+    color: #f5f8fa;
+    margin-left: .7em;
+    margin-right: .3em; 
+    vertical-align: 80%;
+  }
+}
+
+
+.button-custom-twitter:hover {
+  background-color: #5C8DB3;
+}
+/*Poem Index*/
+#right-bar {
+  margin-left: 28em;
+}
+
+#poem-list {
+  box-shadow: -.3em .2em 2em gray;
+  background-color: #FFEDD5;
+  border: 5px solid black;
+  padding: 0em;
+  margin-bottom: 1em;
+  margin-top: -1em;
+  padding-top: 5em;
+}
+
+/*poem show*/
+
+.poem:last-child {
+  border-bottom: 0px solid black;
+  border-radius: 0% 0% 0% 0%;
+}
+.poem {
+  min-height: 130px;
+  text-align: center;
+  border-bottom: $border-thick;
+  border-radius: 0% 0% 15% 15%;
+  padding: 1em;
+  .content {
+    word-wrap: break-word;
+  }
+  .title {
+    font-size: 1.5em;
+    font-family: Lato;
+  }
+  .author {
+    font-family: Lato;
+    color: $color-red-custom;
+    display: inline;
+    padding-right: .2em;
+    padding-left: 0em;
+    vertical-align: 80%;
+  }
+}
+
+
+.author-box {
+  display: block;
+  margin-top: 2em;
+  padding-bottom: 0em;
+  img {
+    border: 1px solid black;
+  }
+}
+
+
+
+.snap, .unsnap {
+  margin: 2em .7em 2em 0em;
+  width: 5em;
+  text-align: center;
+}
+.snap_count {
+  display: inline-block;
+}
+
+.snap-area {
+  text-align: left;
+  padding-left: 2.5em;
+}
+
+/*Responsive Design*/
+
+@media all and (max-width: 940px){
+  #left-bar {
+    /*display: none;*/
+    background-color: $color-base;
+    margin-bottom: 0em;
+    bottom: 0em;
+    left: 0em;
+    z-index: $layer-top;
+    border-top: $border-medium;
+    box-shadow: $shadow-light; 
+  }
+  #left-bar:first-child{ 
+    width: 100%;
+  }
+
+  #new-poem label {
+    display: none
+  }
+
+  textarea {
+    height: 4em;
+  }
+
+  #right-bar {
+    margin-left: 0em;
+  }
+}
