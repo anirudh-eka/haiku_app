@@ -23,7 +23,7 @@ describe PoemsController do
     let(:nil_content) { {content: nil} }
     let(:new_poem_attributes) {FactoryGirl.attributes_for(:poem)}
     let(:wrong_params) {post :create, poem: (nil_content), :format => :json}
-    let(:correct_params) {post :create, poem: (new_poem_attributes), :format => :json}
+    let(:correct_params) {post :create, poem: (new_poem_attributes), tweet: true, :format => :json}
     let(:twitter_client) {double("twitter client", tweet: true)}
 
     context 'when user is logged in' do
@@ -42,9 +42,18 @@ describe PoemsController do
           Poem.all.count.should eq(1)
         end
 
-        it 'sends content to Twitter' do
-          correct_params
-          expect(twitter_client).to have_received(:tweet).with(new_poem_attributes[:content])
+        context 'when tweet box is checked' do 
+          it 'sends content to Twitter' do
+            correct_params
+            expect(twitter_client).to have_received(:tweet).with(new_poem_attributes[:content])
+          end
+        end
+
+        context 'when tweet box is not checked' do
+          let(:correct_params) { post :create, poem: (new_poem_attributes), tweet: false, :format => :json }
+          it 'does not send content to Twitter' do            
+            expect(twitter_client).to_not have_received(:tweet)
+          end
         end
 
         it 'returns the created poem object' do

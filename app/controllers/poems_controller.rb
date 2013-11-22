@@ -11,9 +11,9 @@ class PoemsController < ApplicationController
   def create
     poet = Poet.find(session[:poet_id])
     @poem = poet.poems.new(poem_params)
-
-    if @poem.save
-      #TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(@poem.content) 
+    if @poem.save && tweet?
+      puts 'hello'
+      TwitterAPI.new(poet.oauth_token, poet.oauth_secret).tweet(@poem.content) 
     end
     respond_with(@poem, include: { poet: { only: [:id, :name, :prof_image_url] } })
   end
@@ -32,5 +32,9 @@ class PoemsController < ApplicationController
 
   def poem_params
     params.require(:poem).permit(:title, :content, :snap_count)
+  end
+
+  def tweet?
+    params.permit(:tweet)['tweet']
   end
 end

@@ -58,8 +58,10 @@ HaikuApp.Views.PoemNew = Backbone.View.extend({
     e.preventDefault();
     var title = $('#title').val()
     var content = $('#content').val()
+    var checked = $('#tweet-check-box').prop("checked")
+    console.log(checked)
     var self = this
-    this.collection.create({title: title, content: content}, {wait: true, 
+    this.collection.create({title: title, content: content, tweet: checked}, {wait: true, 
       error: function() {
         self.messager.renderMsg('What is a poem without words?', 'error');
       },

@@ -15,7 +15,7 @@ HaikuApp.Routers.Poems = Backbone.Router.extend({
   },
 
   index: function() {
-    console.log('index')
+    
     this.renderLeftBar();
     if (this.rightBarView) { this.rightBarView.remove() }
     this.rightBarView = new HaikuApp.Views.PoemIndex({ collection: this.collection})
