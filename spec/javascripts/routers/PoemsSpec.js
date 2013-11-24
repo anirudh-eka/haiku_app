@@ -31,6 +31,7 @@ describe("HaikuAppRouter poems", function() {
 
   describe('index', function(){
     beforeEach(function(){
+      this.router.rightBarView = null
       this.renderLeftBarStub = sinon.stub(this.router, "renderLeftBar")
       this.router.bind("route:index", this.routeSpy);
       this.router.navigate("", true);
@@ -44,6 +45,26 @@ describe("HaikuAppRouter poems", function() {
       expect(this.routeSpy.calledOnce).toBeTruthy();
       expect(this.routeSpy.calledWithExactly()).toBeTruthy();  
     });
+
+    describe("when an aboutView exists", function(){
+      beforeEach(function(){
+        this.router.rightBarView = null
+        this.router.aboutView = new Backbone.View();
+        this.removeAboutViewSpy = sinon.spy(this.router.aboutView, 'remove')
+        this.router.navigate("elsewhere");
+        this.router.navigate("", true);
+      });
+
+      afterEach(function(){
+        this.removeAboutViewSpy.restore();
+      });
+      it('removes the aboutView', function(){
+        expect(this.removeAboutViewSpy.calledOnce).toBeTruthy();
+      });
+      it('sets it to null', function(){
+        expect(this.router.aboutView).toBeNull();
+      });
+    })
 
     describe("when a right bar view already exists", function(){
       beforeEach(function(){
@@ -76,6 +97,10 @@ describe("HaikuAppRouter poems", function() {
 
   describe('about', function(){
     beforeEach(function(){
+      this.router.leftBarView = new Backbone.View()
+      this.router.rightBarView = new Backbone.View()
+      this.removeLeftBarViewStub = sinon.spy(this.router.leftBarView,'remove')
+      this.removeRightBarViewStub = sinon.spy(this.router.rightBarView, 'remove')
       this.aboutStub = sinon.stub(HaikuApp.Views, "About")
       this.router.bind("route:about", this.routeSpy);
       this.router.navigate("elsewhere");
@@ -84,6 +109,8 @@ describe("HaikuAppRouter poems", function() {
     
     afterEach(function(){
       this.aboutStub.restore();
+      this.removeLeftBarViewStub.restore();
+      this.removeRightBarViewStub.restore();
     });
 
 
@@ -94,6 +121,18 @@ describe("HaikuAppRouter poems", function() {
 
     it("makes about view", function(){
       expect(this.aboutStub.calledOnce).toBeTruthy();
+    });
+
+    it ('removes leftBarView', function(){
+      expect(this.removeLeftBarViewStub.calledOnce).toBeTruthy();
+    });
+
+    it ('sets leftBarView to null', function(){
+      expect(this.router.leftBarView).toBeNull()
+    });
+
+    it ('removes rightBarView', function(){
+      expect(this.removeRightBarViewStub.calledOnce).toBeTruthy();
     });
   });
 
@@ -120,6 +159,26 @@ describe("HaikuAppRouter poems", function() {
       expect(this.routeSpy.calledOnce).toBeTruthy();
       expect(this.routeSpy.calledWithExactly()).toBeTruthy();  
     });
+
+    describe("when an aboutView exists", function(){
+      beforeEach(function(){
+        this.router.rightBarView = null
+        this.router.aboutView = new Backbone.View();
+        this.removeAboutViewSpy = sinon.spy(this.router.aboutView, 'remove')
+        this.router.navigate("elsewhere");
+        this.router.navigate("myPoetry", true);
+      });
+
+      afterEach(function(){
+        this.removeAboutViewSpy.restore();
+      });
+      it('removes the aboutView', function(){
+        expect(this.removeAboutViewSpy.calledOnce).toBeTruthy();
+      });
+      it('sets it to null', function(){
+        expect(this.router.aboutView).toBeNull();
+      });
+    })
     
     describe("when a right bar view already exists", function(){
       beforeEach(function(){
