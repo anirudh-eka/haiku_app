@@ -24,6 +24,7 @@
 //= require_tree ../templates
 //= require_tree .
 //= require sinon
+//= require jasmine-jquery  
 
 
 $(function() {

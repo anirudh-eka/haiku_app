@@ -4,7 +4,8 @@ HaikuApp.Views.NavBar = Backbone.View.extend({
     'click #signout' : 'signout',
     'click #my-poetry' : 'myPoetry',
     'click #logo' : 'home',
-    'click #all-poetry' : 'home'
+    'click #all-poetry' : 'home',
+    'click #about' : 'about'
   },
 
   signout: function(e) {
@@ -32,6 +33,10 @@ HaikuApp.Views.NavBar = Backbone.View.extend({
       url: '', 
       newText: 'All Poetry'})
    },
+
+  about: function(e) {
+    HaikuApp.router.navigate('about', {trigger: true})
+  },
 
   changeLink: function(args){
     var link = $('#'+args.oldId)
